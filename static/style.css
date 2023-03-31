@@ -1,0 +1,169 @@
+/* Color Variables */
+:root {
+    --lotion: #FAFAFA;
+    --chinese-silver: #C8C8C8;
+    --granite-grey: #646464;
+    --dark-charcoal: #313131;
+    --light-salmon: #FF9E75;
+    --platinum: #E5EDEE;
+    --pale-cyan: #75D6FF;
+    --robin-egg-blue: #12C9CC;
+    --shandy: #75D6FF;
+    --venetian-red: #CC1512;
+}
+
+/* Headings */
+h1 {
+    font-family: 'Fraunces', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 54px;
+    color: var(--granite-grey);
+}
+
+h2 {
+    font-family: 'Fraunces', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+/* Body */
+p {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.bold {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/* Detail */
+.detail {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+.rotate-icon {
+  transform: rotate(180deg);
+  transition: transform 0.3s;
+}
+
+/* Add this to your CSS file */
+
+#sidebar {
+    background-color: #f8f9fa;
+    transition: width 0.3s, padding 0.3s;
+}
+
+#sidebar.collapsed {
+    width: 48px;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+}
+
+#sidebar.collapsed .ms-2.collapsed-text {
+    position: absolute;
+    /* right: 16px; */
+    opacity: 1;
+    visibility: visible;
+    width: auto;
+}
+
+#sidebar .collapse-menu {
+    display: none;
+}
+
+#sidebar.collapsed .collapse-menu {
+    display: inline-flex;
+}
+
+#sidebar .material-icons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+#sidebar .ms-2 {
+    transition: opacity 0.3s, visibility 0.3s, width 0.3s;
+}
+
+#sidebar.collapsed .ms-2 {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+
+
+/* Parallax */
+.parallax {
+
+  background-image: url('/static/images/hero-image.png');
+  height: 120vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: transform 0.5s;
+}
+
+/* sign in buttons */
+
+.apple-signin-button {
+  display: inline-block;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #000;
+  padding: 0 14px;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.apple-signin-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.apple-signin-button::before {
+  content: '';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath d='M19.952 9.617c-.01-.32-.045-.637-.105-.95C19.802 8.29 19.89 7.967 20 7.636c-.024-.01-.048-.018-.072-.027a10.026 10.026 0 00-.211-.076 10.493 10.493 0 00-1.082-3.622c-.166-.01-.333-.023-.499-.033-.144-.01-.287-.023-.431-.033A10.015 10.015 0 0010 0C9.713 0 9.426.01 9.139.029c-.145.01-.288.023-.432.033-.166.01-.333.023-.499.033-.133.371-.256.749-.364 1.131-.232.055-.462.115-.692.173-.213.057-.426.115-.639.18-.032.011-.064.022-.096.033-.072.021-.144.043-.216.064-.213.062-.426.126-.639.197-.01.011-.019.021-.029.031-.032.01-.064.019-.096.029-.213.071-.426.142-.639.218-.115.041-.23.083-.345.124-.021.01-.043.021-.064.031-.133.055-.266.111-.398.167-.115.041-.23.083-.345.124-.021.01-.043.021-.064.031-.133.055-.266.111-.398.167-.1.049-.199.099-.299.148-.01.01-.021.021-.031.031-.1.049-.199.099-.299.148-.1.049-.199.099-.299.148-.01.01-.021.021-.031.031-.1.049-.199.099
+
+/* .google-signin-button {
+  background-color: #4285F4;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  height: 32px;
+  padding: 0 15px;
+  text-align: center;
+  width: 200px;
+} */
+
+
