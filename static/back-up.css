@@ -32,19 +32,9 @@ h2 {
     font-weight: 400;
     font-size: 24px;
     line-height: 32px;
-    color: var(--grey100);
 }
 
 /* Body */
-
-body {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 16px;
-    color: var(--grey100);
-}
 p {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -78,7 +68,7 @@ p {
 .side-menu {
     width: var(--side-menu-width);
     height: 100vh;
-    background-color: var(--white);
+    background-color: #3f51b5;
     position: fixed;
     z-index: 1;
 }
@@ -87,66 +77,41 @@ p {
     list-style-type: none;
     padding: 0;
     margin: 0;
-}
+  }
 
 .side-menu li {
     display: flex;
     align-items: center;
     padding: 16px 0;
-    color: var(--grey100);
+    color: #ffffff;
     cursor: pointer;
-}
+  }
 
 .side-menu li:hover {
-    background-color: var(--grey300);
-}
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
 .side-menu i.material-icons {
     margin: 0 16px;
-}
+  }
 
 .bottom-items {
     position: absolute;
     bottom: 0;
     width: 100%;
-}
+  }
 
 .collapsed {
     width: var(--side-menu-collapsed-width);
-}
+  }
 
 .collapsed li span {
     display: none;
-}
+  }
 
 .collapse-item span {
     margin-top: -4px;
-}
-
-.chart {
-    background-color: var(--white);
-    border: 1px solid var(--grey300);
-    border-radius: 16px;
-    padding: 16px;
-    height: 70vh; /* Adjust this value as needed */
-    width: 100%;
-}
-
-.grid line {
-    stroke: lightgrey;
-    stroke-opacity: 0.7;
-    shape-rendering: crispEdges;
   }
-  
-  .grid path {
-    stroke-width: 0;
-  }
-  
-  .grid .domain {
-    display: none;
-  }
-  
-
 
 .bottom-items {
     position: absolute;
@@ -154,27 +119,34 @@ p {
     width: 100%;
     display: flex;
     flex-direction: column;
-}
+  }
 
-.row {
+/* .row > .col-lg-4 {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  */
+
+  .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: 0px;
-    margin-left: 0px;
-    gap: 16px;
-}
+    margin-right: -8px;
+    margin-left: -8px;
+  }
   
+
 .col-2 {
     padding-right: 0;
-}
+  }
 
 .my-3 {
     margin-top: 24px;
-}
+  }
 
 .bottom-section {
     margin-bottom: 24px;
-}
+  }
 
 .logout-line {
   border-top: 1px solid var(--grey100);
@@ -190,45 +162,34 @@ p {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
+  }
+/* (previous CSS rules remain the same) */
 
 .content-wrapper {
-    background-color: var(--secondary);
     margin-left: var(--side-menu-width);
     padding: 16px;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-left: calc(100% - (100% - var(--side-menu-width)));
+    margin-left: calc(100% - (100% - var(--side-menu-width))); /* update this line */
     min-height: 100vh;
 }
 
 .content-wrapper.menu-collapsed {
     margin-left: var(--side-menu-collapsed-width);
-}
+  }
 
 .card-container {
-    flex: 1 0;
-    max-width: 100%;
-    padding-right: 0;
-    padding-left: 0;
-}
-
-.card {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 16px;
-    border: 1px solid var(--grey300);
-    
-}
+    flex: 0 0 calc(33.333% - 16px);
+    max-width: calc(33.333% - 16px);
+    padding-right: 8px;
+    padding-left: 8px;
+    margin-bottom: 16px;
+  }
   
   
-  
-@media (max-width: 670px) {
+@media (max-width: 576px) {
     .card-container {
         flex: 1 1 calc(100% - 16px);
         max-width: calc(100% - 16px);
