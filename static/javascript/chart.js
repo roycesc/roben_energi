@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 const generateSampleData = () => {
     const data = [];
   
@@ -86,7 +88,7 @@ const drawChart = () => {
       svg
       .append("rect")
       .attr("x", x(0))
-      .attr("y", y(100))
+      .attr("y", y(124))
       .attr("width", x(24))
       .attr("height", height)
       .attr("fill", "white")
@@ -95,39 +97,33 @@ const drawChart = () => {
       
     // Add background color for 24:00 to 48:00
     svg
-    .append("rect")
-    .attr("x", x(24))
-    .attr("y", 0)
-    .attr("width", x(24))
-    .attr("height", height)
-    .attr("fill", "grey")
-    .attr("opacity", 0.3);
+        .append("rect")
+        .attr("x", x(24))
+        .attr("y", 0)
+        .attr("width", x(24))
+        .attr("height", height)
+        .attr("fill", "grey")
+        .attr("opacity", 0.3);
       
       // Add text background and date for 0:00 to 24:00
       svg
-      .append("rect")
-      .attr("x", x(0))
-      .attr("y", 0)
-      .attr("width", x(24))
-      .attr("height", 20)
-      .attr("fill", "white");
+        .append("rect")
+        .attr("x", x(0))
+        .attr("y", -24)
+        .attr("width", x(24))
+        .attr("height", 20)
+        .attr("fill", "white");
       
       svg
-      .append("text")
-      .attr("x", x(12))
-      .attr("y", 15)
-      .attr("text-anchor", "middle")
-      .attr("font-size", "12px")
-      .text(new Date().toLocaleDateString());
+        .append("text")
+        .attr("x", x(12))
+        .attr("y", 15)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .text(`Today - ${new Date().toLocaleDateString()}`);
+
       
       // Add text background and date for 24:00 to 48:00
-      svg
-      .append("rect")
-      .attr("x", x(24))
-      .attr("y", 0)
-      .attr("width", x(24))
-      .attr("height", 20)
-      .attr("fill", "grey");
       
       svg
         .append("text")
@@ -135,14 +131,14 @@ const drawChart = () => {
         .attr("y", 15)
         .attr("text-anchor", "middle")
         .attr("font-size", "12px")
-        .attr("fill", "white")
-        .text(new Date(Date.now() + 86400000).toLocaleDateString());
+        .text(`Tomorrow - ${new Date(Date.now() + 86400000).toLocaleDateString()}`);
 
       // Add line
       const line = d3
       .line()
       .x((d) => x(d.hour))
-      .y((d) => y(d.value));
+      .y((d) => y(d.value))
+      .curve(d3.curveStepAfter);
       
       // Add gradient
       const gradient = svg
