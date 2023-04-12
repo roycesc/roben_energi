@@ -1,4 +1,4 @@
-from flask_app import db
+from extentions import db
 
 class Price(db.Model):
     id = db.Column(db.Integer, primary_key=True)
