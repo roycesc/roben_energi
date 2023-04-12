@@ -1,7 +1,7 @@
 import requests
 import json
 import re
-# import pandas as pd
+import pandas as pd
 import datetime
 from models import Price
 from flask_app import db
