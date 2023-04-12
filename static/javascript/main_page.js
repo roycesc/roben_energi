@@ -9,8 +9,4 @@ document.addEventListener("DOMContentLoaded", function () {
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-
-
-
-    // Add your D3 chart logic here
 });

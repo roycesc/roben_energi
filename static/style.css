@@ -1,15 +1,19 @@
 /* Color Variables */
 :root {
-    --lotion: #FAFAFA;
-    --chinese-silver: #C8C8C8;
-    --granite-grey: #646464;
-    --dark-charcoal: #313131;
-    --light-salmon: #FF9E75;
-    --platinum: #E5EDEE;
+    --white: #FAFAFA;
+    --grey300: #C8C8C8;
+    --grey200: #646464;
+    --grey100: #313131;
+    --primary: #FF9E75;
+    --secondary: #E5EDEE;
     --pale-cyan: #75D6FF;
     --robin-egg-blue: #12C9CC;
     --shandy: #75D6FF;
     --venetian-red: #CC1512;
+
+    /* Side menu */
+    --side-menu-width: 224px;
+    --side-menu-collapsed-width: 56px;
 }
 
 /* Headings */
@@ -19,7 +23,7 @@ h1 {
     font-weight: 600;
     font-size: 40px;
     line-height: 54px;
-    color: var(--granite-grey);
+    color: var(--grey200);
 }
 
 h2 {
@@ -28,9 +32,25 @@ h2 {
     font-weight: 400;
     font-size: 24px;
     line-height: 32px;
+    color: var(--grey100);
 }
 
-/* Body */
+/* Fonts & Texts */
+
+.my-font, .my-font * {
+    font-family: 'Roboto', sans-serif;
+    color: var(--grey100);
+  }
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--grey100);
+}
 p {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -47,7 +67,6 @@ p {
     line-height: 24px;
 }
 
-/* Detail */
 .detail {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -61,109 +80,163 @@ p {
   transition: transform 0.3s;
 }
 
-/* Add this to your CSS file */
-
-#sidebar {
-    background-color: #f8f9fa;
-    transition: width 0.3s, padding 0.3s;
+.side-menu {
+    border-right: 1px solid var(--grey300);
+    width: var(--side-menu-width);
+    height: 100vh;
+    background-color: var(--white);
+    position: fixed;
+    z-index: 1;
 }
 
-#sidebar.collapsed {
-    width: 48px;
-    padding-left: 8px;
-    padding-right: 8px;
-    overflow: hidden;
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-#sidebar.collapsed .ms-2.collapsed-text {
+.side-menu li {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    color: var(--grey100);
+    cursor: pointer;
+}
+
+.side-menu li:hover {
+    background-color: var(--grey300);
+}
+
+.side-menu i.material-icons {
+    margin: 0 16px;
+}
+
+.bottom-items {
     position: absolute;
-    /* right: 16px; */
-    opacity: 1;
-    visibility: visible;
-    width: auto;
+    bottom: 0;
+    width: 100%;
 }
 
-#sidebar .collapse-menu {
+.collapsed {
+    width: var(--side-menu-collapsed-width);
+}
+
+.collapsed li span {
     display: none;
 }
 
-#sidebar.collapsed .collapse-menu {
-    display: inline-flex;
+.collapse-item span {
+    margin-top: -4px;
 }
 
-#sidebar .material-icons {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
-    display: inline-block;
+.chart {
+    background-color: var(--white);
+    border: 1px solid var(--grey300);
+    border-radius: 16px;
+    padding: 16px;
+    height: 70vh; /* Adjust this value as needed */
+    width: 100%;
 }
 
-#sidebar .ms-2 {
-    transition: opacity 0.3s, visibility 0.3s, width 0.3s;
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .grid path {
+    stroke-width: 0;
+  }
+
+  .grid .domain {
+    display: none;
+  }
+
+.bottom-items {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-#sidebar.collapsed .ms-2 {
-    opacity: 0;
-    visibility: hidden;
-    width: 0;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+    gap: 16px;
+}
+
+.col-2 {
+    padding-right: 0;
+}
+
+.my-3 {
+    margin-top: 24px;
+}
+
+.bottom-section {
+    margin-bottom: 24px;
+}
+
+.logout-line {
+  border-top: 1px solid var(--grey100);
+  width: 100%;
+  margin-bottom: 12px;
 }
 
 
-
-/* Parallax */
 .parallax {
-
-  background-image: url('/static/images/hero-image.png');
-  height: 120vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  transition: transform 0.5s;
+    background-image: url('/static/images/hero-image-top.png');
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-/* sign in buttons */
-
-.apple-signin-button {
-  display: inline-block;
-  box-sizing: border-box;
-  cursor: pointer;
-  user-select: none;
-  text-align: center;
-  white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  background-color: #000;
-  padding: 0 14px;
-  border-radius: 15px;
-  overflow: hidden;
-  width: 200px;
-  height: 32px;
-  line-height: 32px;
+.content-wrapper {
+    background-color: var(--secondary);
+    margin-left: var(--side-menu-width);
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: calc(100% - (100% - var(--side-menu-width)));
+    min-height: 100vh;
 }
 
-.apple-signin-button:hover {
-  background-color: rgba(0, 0, 0, 0.9);
+.content-wrapper.menu-collapsed {
+    margin-left: var(--side-menu-collapsed-width);
 }
 
-.apple-signin-button::before {
-  content: '';
-  display: inline-block;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath d='M19.952 9.617c-.01-.32-.045-.637-.105-.95C19.802 8.29 19.89 7.967 20 7.636c-.024-.01-.048-.018-.072-.027a10.026 10.026 0 00-.211-.076 10.493 10.493 0 00-1.082-3.622c-.166-.01-.333-.023-.499-.033-.144-.01-.287-.023-.431-.033A10.015 10.015 0 0010 0C9.713 0 9.426.01 9.139.029c-.145.01-.288.023-.432.033-.166.01-.333.023-.499.033-.133.371-.256.749-.364 1.131-.232.055-.462.115-.692.173-.213.057-.426.115-.639.18-.032.011-.064.022-.096.033-.072.021-.144.043-.216.064-.213.062-.426.126-.639.197-.01.011-.019.021-.029.031-.032.01-.064.019-.096.029-.213.071-.426.142-.639.218-.115.041-.23.083-.345.124-.021.01-.043.021-.064.031-.133.055-.266.111-.398.167-.115.041-.23.083-.345.124-.021.01-.043.021-.064.031-.133.055-.266.111-.398.167-.1.049-.199.099-.299.148-.01.01-.021.021-.031.031-.1.049-.199.099-.299.148-.1.049-.199.099-.299.148-.01.01-.021.021-.031.031-.1.049-.199.099
+.card-container {
+    flex: 1 0;
+    max-width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
 
-/* .google-signin-button {
-  background-color: #4285F4;
-  border: none;
-  border-radius: 15px;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  height: 32px;
-  padding: 0 15px;
-  text-align: center;
-  width: 200px;
-} */
+.card {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 16px;
+    border: 1px solid var(--grey300);
+
+}
+
+
+
+@media (max-width: 670px) {
+    .card-container {
+        flex: 1 1 calc(100% - 16px);
+        max-width: calc(100% - 16px);
+    }
+}
 
 
