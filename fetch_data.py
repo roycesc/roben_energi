@@ -1,17 +1,19 @@
 import requests
 import json
 import re
-import pandas as pd
 import datetime
 from models import Price
-from flask_app import db
-
-
+from extensions import db
 
 def fetch_data():
     url = "https://www.nordpoolgroup.com/api/marketdata/page/10"
     response = requests.get(url)
     data = json.loads(response.text)
+
+    if 'data' not in data or 'PageTitle' not in data['data']:
+        print("Unexpected API response format:")
+        print(json.dumps(data, indent=2))
+        return []
 
     # Extract the date from the page title
     page_title = data['data']['PageTitle']
@@ -43,7 +45,7 @@ def fetch_data():
 
 def store_data(data):
     for entry in data:
-        price_entry = Price(region=entry['region'], hour=entry['hour'], price=entry['price'])
+        price_entry = Price(date=entry['date'], region=entry['region'], hour=entry['hour'], price=entry['price'])
         db.session.add(price_entry)
     db.session.commit()
 
