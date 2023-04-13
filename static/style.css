@@ -80,6 +80,20 @@ p {
   transition: transform 0.3s;
 }
 
+.side-menu .collapsed-logo {
+    display: none;
+    height: auto;
+    margin: 16px;
+  }
+  
+  .side-menu.collapsed .expanded-logo {
+    display: none;
+  }
+  
+  .side-menu.collapsed .collapsed-logo {
+    display: block;
+  }
+  
 .side-menu {
     border-right: 1px solid var(--grey300);
     width: var(--side-menu-width);
@@ -126,10 +140,18 @@ p {
 
 .side-menu li a:hover {
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     background-color: var(--grey300);
 }
 
+.side-menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--grey200);
+  }
+  
 
 .bottom-items {
     position: absolute;
@@ -143,10 +165,6 @@ p {
 
 .collapsed li span {
     display: none;
-}
-
-.collapse-item span {
-    margin-top: -4px;
 }
 
 .chart {
