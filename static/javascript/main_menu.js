@@ -3,10 +3,12 @@ function toggleCollapse() {
   const contentWrapper = document.querySelector('.content-wrapper');
   sideMenu.classList.toggle('collapsed');
   contentWrapper.classList.toggle('menu-collapsed');
+  document.querySelector('.collapse-icon').classList.toggle('rotate-icon');
 
   // Trigger the window resize event
   window.dispatchEvent(new Event('resize'));
 }
+
 // Window resize
 
 window.addEventListener('resize', () => {
@@ -14,7 +16,6 @@ window.addEventListener('resize', () => {
     window.onWindowResize();
   }
 });
-
 
 function resizeCards() {
   const cardContainers = document.querySelectorAll('.card-container');
@@ -34,3 +35,6 @@ function resizeCards() {
     ? `calc(100% - (100% - var(--side-menu-collapsed-width)))`
     : `calc(100% - (100% - var(--side-menu-width)))`;
 }
+
+// Call the function to collapse the menu by default
+toggleCollapse(true);
