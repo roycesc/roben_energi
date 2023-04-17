@@ -226,7 +226,15 @@ window.addEventListener("resize", () => {
     drawChart();
     });
 
-// Initial call to drawChart
-document.addEventListener("DOMContentLoaded", () => {
-drawChart();
-});
+
+    document.addEventListener("DOMContentLoaded", function () {
+        drawChart();
+      
+        function resizeChart() {
+          d3.select("#chart").html("");
+          drawChart();
+        }
+      
+        window.addEventListener("resize", resizeChart);
+        window.addEventListener("sideMenuToggle", resizeChart);
+      });

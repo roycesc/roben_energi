@@ -22,9 +22,10 @@
         <!--Side menu -->
         <div class="side-menu">
             <a href="/main">
-                <img src="/static/images/roben-logo.svg" alt="Logo" style="logos" class="expanded-logo">
-                <img src="/static/images/roben-symbol.svg" alt="Logo" style="logos" class="collapsed-logo">
-            </a>            <ul>
+                <img src="/static/images/roben-logo.svg" alt="Logo" class="expanded-logo">
+                <img src="/static/images/roben-symbol.svg" alt="Logo" class="collapsed-logo">
+            </a> 
+            <ul>
             <li><i class="material-icons">account_circle</i><span>My Account</span></li>
             <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
             <li class="collapse-item" onclick="toggleCollapse()"><i class="material-icons collapse-icon">double_arrow</i><span>Collapse</span></li>
@@ -32,7 +33,7 @@
             <div class="bottom-items">
             <ul>
                 <li><i class="material-icons">logout</i><span>Log out</span></li>
-                <li><i class="material-icons">settings</i><span>Settings</span></li>
+                <li><a href="/settings"><i class="material-icons">settings</i><span>Settings</span></a></li>
             </ul>
             </div>
         </div>
@@ -66,9 +67,10 @@
         {% block content %}{% endblock %}
     
         <!-- JavaScript -->
+        <script src="/static/javascript/settingsjs"></script>
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="/static/javascript/main_menu.js"></script>
         <script src="/static/javascript/chart.js"></script>
 
     </body>
-</html>
+</html>:

@@ -23,6 +23,10 @@ def landing_page():
 def main_page():
     return render_template('main_page.html')
 
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
 @app.route('/prices')
 def get_prices():
     prices = Price.query.all()

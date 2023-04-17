@@ -1,5 +1,6 @@
+const sideMenuToggleEvent = new Event('sideMenuToggle');
 
-// Gets veriables values from the css
+// Gets variables values from the css
 function getCssVariableValue(variableName) {
   return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
 }
@@ -8,8 +9,9 @@ function getCssVariableValue(variableName) {
 function toggleCollapse() {
   const sideMenu = document.querySelector('.side-menu');
   const contentWrapper = document.getElementById('content-wrapper');
+  
   sideMenu.classList.toggle('collapsed');
-
+  
   const sideMenuWidth = getCssVariableValue('--side-menu-width');
   const sideMenuCollapsedWidth = getCssVariableValue('--side-menu-collapsed-width');
   
@@ -18,6 +20,9 @@ function toggleCollapse() {
   } else {
     contentWrapper.style.marginLeft = sideMenuWidth;
   }
+
+  // Dispatch the custom event
+  window.dispatchEvent(sideMenuToggleEvent);
 }
 
 // Toggle Mobile Menu
@@ -51,5 +56,3 @@ window.addEventListener('resize', handleWindowResize);
 document.addEventListener('DOMContentLoaded', () => {
   handleWindowResize();
 });
-
-
