@@ -3,27 +3,33 @@
 {% block content %}
 <div class="content-wrapper" id="content-wrapper">
     <h1>Settings</h1>
-    <div class="card">
-        <div>
-            <h2>Select Region</h2>
-                <select class="my-font" id="regionSelect" onchange="saveSettings()">
-                    <option value="SE1">SE1</option>
-                    <option value="SE2">SE2</option>
-                    <option value="SE3">SE3</option>
-                    <!-- Add other options for regions -->
-                </select>
-        </div>
-        <div>
-                <h2>Select Currency</h2 id="currencySelect" onchange="saveSettings()">
-                <select class="my-font">
-                    <option value="EUR">EUR</option>
-                    <option value="DKK">DKK</option>
-                    <option value="NOK">NOK</option>
-                    <option value="SEK">SEK</option>
-                </select>
 
-                <button id="updateButton">Update</button>
+    <div class="card-container col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Select Region</h5>
+                <p class="card-text">
+                    <select id="regionSelect">
+                        <option value="SE1">SE1</option>
+                        <option value="SE2">SE2</option>
+                        <option value="SE3">SE3</option>
+                    </select>
+                        <!-- Add other options for regions -->
+                </p>
+
+                <h5 class="card-title">Select Currency</h5>
+                <p class="card-text">
+                        <select id="currencySelect">
+                            <option value="EUR">EUR</option>
+                            <option value="DKK">DKK</option>
+                            <option value="NOK">NOK</option>
+                            <option value="SEK">SEK</option>
+                        </select>
+                </p>
+
+                <button class="button" id="updateButton">Update</button>
+            </div>
         </div>
     </div>
-</div>
+
 {% endblock %}
