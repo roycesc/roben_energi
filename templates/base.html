@@ -13,17 +13,17 @@
         <!-- D3.js -->
         <script src="https://d3js.org/d3.v6.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     </head>
     <body>
+        
 
         <!--Side menu -->
         <div class="side-menu">
             <a href="/main">
-                <img src="/static/images/roben-logo.svg" alt="Logo" width="120" class="expanded-logo">
-                <img src="/static/images/roben-bird-logo.svg" alt="Logo" width="48" class="collapsed-logo">
+                <img src="/static/images/roben-logo.svg" alt="Logo" style="logos" class="expanded-logo">
+                <img src="/static/images/roben-symbol.svg" alt="Logo" style="logos" class="collapsed-logo">
             </a>            <ul>
             <li><i class="material-icons">account_circle</i><span>My Account</span></li>
             <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
@@ -37,8 +37,34 @@
             </div>
         </div>
 
-        {% block content %}{% endblock %}
+    <!-- Hamburger munu -->
+    <div id="hamburgerMenu" class="hamburger-menu">
+            <img src="/static/images/roben-symbol.svg" alt="Logo" width="40" class="me-2">
+            <button onclick="toggleMobileMenu()">
+                <i class="material-icons">menu</i>
+            </button>
+            <div id="hamburgerMenuItems" class="hide">
+                <a href="#">
+                    <i class="material-icons">account_circle</i>
+                    <span>My Account</span>
+                </a>
+                <a href="/prices">
+                    <i class="material-icons">bar_chart</i>
+                    <span>Price Data</span>
+                </a>
+                <a href="#">
+                    <i class="material-icons">logout</i>
+                    <span>Log out</span>
+                </a>
+                <a href="#">
+                    <i class="material-icons">settings</i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
 
+        {% block content %}{% endblock %}
+    
         <!-- JavaScript -->
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="/static/javascript/main_menu.js"></script>

@@ -1,40 +1,55 @@
-function toggleCollapse() {
-  const sideMenu = document.querySelector('.side-menu');
-  const contentWrapper = document.querySelector('.content-wrapper');
-  sideMenu.classList.toggle('collapsed');
-  contentWrapper.classList.toggle('menu-collapsed');
-  document.querySelector('.collapse-icon').classList.toggle('rotate-icon');
 
-  // Trigger the window resize event
-  window.dispatchEvent(new Event('resize'));
+// Gets veriables values from the css
+function getCssVariableValue(variableName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// Increase the contents of the webpage in relation to the side menu size changing
+function toggleCollapse() {
+  const sideMenu = document.querySelector('.side-menu');
+  const contentWrapper = document.getElementById('content-wrapper');
+  sideMenu.classList.toggle('collapsed');
+
+  const sideMenuWidth = getCssVariableValue('--side-menu-width');
+  const sideMenuCollapsedWidth = getCssVariableValue('--side-menu-collapsed-width');
   
-  // Window resize
-  window.addEventListener('resize', () => {
-    if (window.hasOwnProperty('onWindowResize')) {
-      window.onWindowResize();
-    }
-  });
-
-  function resizeCards() {
-    const cardContainers = document.querySelectorAll('.card-container');
-    const contentWrapper = document.querySelector('.content-wrapper');
-    const isCollapsed = contentWrapper.classList.contains('menu-collapsed');
-    const newWidth = isCollapsed
-      ? `calc((100% - var(--side-menu-collapsed-width) - 32px) / 3)`
-      : `calc((100% - var(--side-menu-width) - 32px) / 3)`;
-
-    cardContainers.forEach((cardContainer) => {
-      cardContainer.style.flex = `0 0 ${newWidth}`;
-      cardContainer.style.maxWidth = newWidth;
-    });
-
-    // Update the margin-left property of content-wrapper
-    contentWrapper.style.marginLeft = isCollapsed
-      ? `calc(100% - (100% - var(--side-menu-collapsed-width)))`
-      : `calc(100% - (100% - var(--side-menu-width)))`;
+  if (sideMenu.classList.contains('collapsed')) {
+    contentWrapper.style.marginLeft = sideMenuCollapsedWidth;
+  } else {
+    contentWrapper.style.marginLeft = sideMenuWidth;
   }
+}
 
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+  const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
+  hamburgerMenuItems.classList.toggle("hide");
+}
+
+// Change side menu on window resize
+function handleWindowResize() {
+  const sideMenu = document.querySelector('.side-menu');
+  const hamburgerMenu = document.querySelector('.hamburger-menu');
+  const contentWrapper = document.getElementById('content-wrapper');
+  const width = window.innerWidth;
+
+  if (width <= 767) {
+    sideMenu.style.display = 'none';
+    hamburgerMenu.style.display = 'flex';
+    contentWrapper.style.marginLeft = '0';
+  } else {
+    sideMenu.style.display = 'block';
+    hamburgerMenu.style.display = 'none';
+    contentWrapper.style.marginLeft = sideMenu.classList.contains('collapsed') ? getCssVariableValue('--side-menu-collapsed-width') : getCssVariableValue('--side-menu-width');
+  }
+}
+
+// Add event listener for window resize
+window.addEventListener('resize', handleWindowResize);
+
+// Set initial side menu state based on window size
+document.addEventListener('DOMContentLoaded', () => {
+  handleWindowResize();
 });
+
+
