@@ -4,11 +4,9 @@ from extensions import db
 from models import Price
 import requests
 import json
-import re
 import datetime
 import pandas as pd
-
-
+from pandas import Index
 
 def fetch_data():
     url = "https://www.nordpoolgroup.com/api/marketdata/page/10"
@@ -39,7 +37,9 @@ def fetch_data():
             prices[area_name][hour] = price
 
     df = pd.DataFrame(prices)
-    df.index = [i.split('-')[0] for i in df.index]
+    df.index = pd.to_datetime(df.index).strftime('%Y-%m-%d')
+
+
 
     # Convert the DataFrame to a list of dictionaries
     data_list = []
