@@ -1,12 +1,21 @@
 function saveSettings() {
     const regionSelect = document.getElementById('regionSelect');
     const currencySelect = document.getElementById('currencySelect');
+    const updateButton = document.getElementById('updateButton');
 
     localStorage.setItem('selectedRegion', regionSelect.value);
     localStorage.setItem('selectedCurrency', currencySelect.value);
 
-    document.getElementById('updateButton').disabled = true;
-}
+    updateButton.disabled = true;
+    updateButton.textContent = 'Updated';
+
+    setTimeout(() => {
+        updateButton.disabled = false;
+        updateButton.textContent = 'Update';
+    }, 3000); // Change back to "Update" after 3 seconds
+
+    // Reload the /prices page with the selected region as a query parameter
+    updatePricesPage(regionSelect.value);}
 
 function loadSettings() {
     const regionSelect = document.getElementById('regionSelect');
@@ -42,3 +51,23 @@ const currencySelect = document.getElementById('currencySelect');
 
 regionSelect.addEventListener('change', enableUpdateButton);
 currencySelect.addEventListener('change', enableUpdateButton);
+
+function updatePricesPage(selectedRegion) {
+    // Send a POST request to the server with the selected region
+    fetch('/prices', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ selectedRegion }),
+    })
+    .then((response) => {
+        if (response.ok) {
+            console.log('Region updated successfully');
+        } else {
+            console.error('Error updating region');
+        }
+    });
+}
+
+

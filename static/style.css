@@ -13,7 +13,7 @@
 
     /* Side menu */
     --side-menu-width: 192px;
-    --side-menu-collapsed-width: 56px;
+    --side-menu-collapsed-width: 64px;
 }
 
 /* Headings */
@@ -75,6 +75,25 @@ p {
     line-height: 24px;
 }
 
+.button {
+    padding: 8px 16px;
+    border: 2px;
+    border-radius: 16px;
+    background-color: var(--shandy);
+    border-color: var(--pale-cyan);
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--grey200);
+
+}
+
+.button:disabled {
+    background-color: var(--grey300);
+    color: var(--secondary);
+    cursor: not-allowed;
+}
+
 .rotate-icon {
   transform: rotate(180deg);
   transition: transform 0.3s;
@@ -83,7 +102,7 @@ p {
 
 .side-menu .collapsed-logo {
     display: none;
-    margin: 8px 0px;
+    padding: 8px 10px;
     
   }
   
