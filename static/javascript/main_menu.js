@@ -9,12 +9,12 @@ function getCssVariableValue(variableName) {
 function toggleCollapse() {
   const sideMenu = document.querySelector('.side-menu');
   const contentWrapper = document.getElementById('content-wrapper');
-  
+
   sideMenu.classList.toggle('collapsed');
-  
+
   const sideMenuWidth = getCssVariableValue('--side-menu-width');
   const sideMenuCollapsedWidth = getCssVariableValue('--side-menu-collapsed-width');
-  
+
   if (sideMenu.classList.contains('collapsed')) {
     contentWrapper.style.marginLeft = sideMenuCollapsedWidth;
   } else {
@@ -48,6 +48,7 @@ function handleWindowResize() {
     contentWrapper.style.marginLeft = sideMenu.classList.contains('collapsed') ? getCssVariableValue('--side-menu-collapsed-width') : getCssVariableValue('--side-menu-width');
   }
 }
+
 
 // Add event listener for window resize
 window.addEventListener('resize', handleWindowResize);

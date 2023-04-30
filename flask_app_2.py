@@ -6,8 +6,7 @@ from extensions import db
 from collections import defaultdict
 from dotenv import load_dotenv
 from flask_session import Session
-from datetime import datetime, time, timedelta
-from sqlalchemy import and_, or_
+from datetime import date, timedelta
 
 load_dotenv('.env')
 
@@ -41,6 +40,7 @@ def settings():
         session['selected_region'] = selected_region
     return render_template('settings.html')
 
+
 @app.route('/prices', methods=['GET', 'POST'])
 def prices():
     if request.method == 'POST':
@@ -60,50 +60,24 @@ def prices():
 
     return render_template('prices.html', grouped_data=sorted_grouped_data)
 
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
-
 @app.route('/chart_data', methods=['GET'])
 def chart_data():
     region = request.args.get('region', 'SYS')
-
-    # Get the latest date and hour available in the database for the given region
-    latest_entry = Price.query.filter(Price.region == region).order_by(Price.date.desc(), Price.hour.desc()).first()
-    latest_datetime = datetime.combine(latest_entry.date, time(latest_entry.hour))
-
-    # Calculate the start date and hour
-    start_datetime = latest_datetime - timedelta(hours=47)
-
-    # Query the data between start and end datetime
+    now = date.today()
+    today = now #- timedelta(days=1)
     prices = Price.query.filter(
         Price.region == region,
-        and_(
-            or_(
-                Price.date > start_datetime.date(),
-                and_(Price.date == start_datetime.date(), Price.hour >= start_datetime.hour),
-            ),
-            or_(
-                Price.date < latest_datetime.date(),
-                and_(Price.date == latest_datetime.date(), Price.hour <= latest_datetime.hour),
-            ),
-        )
+        Price.date >= today
     ).order_by(Price.date, Price.hour).all()
 
-    price_data = [
-        {
-            'date': price.date.strftime('%Y-%m-%d'),
-            'hour': price.hour,
-            'price': price.price
-        }
-        for price in prices
-    ]
+    data = [{
+        'date': price.date.strftime('%Y-%m-%d'),
+        'hour': price.hour,
+        'price': price.price
+    } for price in prices]
 
-    return jsonify(price_data)
+    return jsonify(data)
+
 
 if __name__ == '__main__':
     Session(app)

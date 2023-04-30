@@ -10,26 +10,25 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="/static/style.css">
 
-        <!-- D3.js -->
-        <script src="https://d3js.org/d3.v6.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     </head>
     <body>
-        
+
 
         <!--Side menu -->
         <div class="side-menu">
             <a href="/main">
                 <img src="/static/images/roben-logo.svg" alt="Logo" class="expanded-logo">
                 <img src="/static/images/roben-symbol.svg" alt="Logo" class="collapsed-logo">
-            </a> 
+            </a>
             <ul>
-            <li><i class="material-icons">account_circle</i><span>My Account</span></li>
-            <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
-            <li class="collapse-item" onclick="toggleCollapse()"><i class="material-icons collapse-icon">double_arrow</i><span>Collapse</span></li>
-            </ul>
+                <li><a href="/main"><i class="material-icons">home</i><span>Home</span></a></li>
+                <li><i class="material-icons">account_circle</i><span>My Account</span></li>
+                <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
+                <li class="collapse-item" onclick="toggleCollapse()"><i class="material-icons collapse-icon">double_arrow</i><span>Collapse</span></li>
+                </ul>
             <div class="bottom-items">
             <ul>
                 <li><i class="material-icons">logout</i><span>Log out</span></li>
@@ -45,8 +44,12 @@
                 <i class="material-icons">menu</i>
             </button>
             <div id="hamburgerMenuItems" class="hide">
+                <a href="/main">
+                    <i class="material-icons">home</i>
+                    <span>Home</span>
+                </a>
                 <a href="#">
-                    <i class="material-icons">account_circle</i>
+                    <i class="material-icons">account</i>
                     <span>My Account</span>
                 </a>
                 <a href="/prices">
@@ -57,20 +60,29 @@
                     <i class="material-icons">logout</i>
                     <span>Log out</span>
                 </a>
-                <a href="#">
+                <a href="/settings">
                     <i class="material-icons">settings</i>
                     <span>Settings</span>
                 </a>
             </div>
         </div>
 
-        {% block content %}{% endblock %}
-    
-        <!-- JavaScript -->
-        <script src="/static/javascript/settings.js"></script>
-        <script src="https://d3js.org/d3.v7.min.js"></script>
-        <script src="/static/javascript/main_menu.js"></script>
-        <script src="/static/javascript/chart.js"></script>
 
+        {% block content %}{% endblock %}
+
+        <!-- Settings Overlay 
+
+        <div id="settings-overlay" class="overlay-container" style="display:none;">
+          <div class="overlay-content">
+            Junk in here
+          </div>
+          <div class="overlay-close">
+            <i class="material-icons">close</i>
+          </div>
+        </div> -->
+
+        <!-- JavaScript -->
+        <script src="/static/javascript/main_menu.js"></script>
     </body>
-</html>:
+</html>
+
