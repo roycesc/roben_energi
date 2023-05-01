@@ -1,12 +1,8 @@
-{% extends 'base.html' %}
+<div class="modal-content">
+    <span class="close">&times;</span>
 
-{% block content %}
-<div class="content-wrapper" id="content-wrapper">
-    <h1>Settings</h1>
+<h1>Settings</h1>
 
-    <div class="card-container col">
-        <div class="card h-100">
-            <div class="card-body">
                 <form id="settingsForm">
                     <h5 class="card-title">Select Region</h5>
                     <p class="card-text">
@@ -48,10 +44,6 @@
                     </p>
                     <button class="button" id="updateButton" type="submit">Update</button>
                 </form>
-            </div>
-        </div>
-    </div>
 
-    <script src="/static/javascript/settings.js"></script>
-
-{% endblock %}
+</div>
+<script src="static/javascript/settings.js" type="module"></script>

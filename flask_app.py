@@ -39,7 +39,9 @@ def settings():
     if request.method == 'POST':
         selected_region = request.form.get('selectedRegion')
         session['selected_region'] = selected_region
-    return render_template('settings.html')
+        return jsonify({'status': 'success'})
+    else:
+        return render_template('settings.html')
 
 @app.route('/prices', methods=['GET', 'POST'])
 def prices():

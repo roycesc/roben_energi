@@ -1,3 +1,6 @@
+import { getSelectedRegion } from './settings.js';
+
+
 const chartDiv = d3.select('#chart');
 let chartDivWidth = parseInt(chartDiv.style('width'));
 let chartDivHeight = parseInt(chartDiv.style('height'));
@@ -73,6 +76,7 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
 // Add area path generator
   const area = d3
     .area()
+    .curve(d3.curveCardinal)
     .x((d) => x(new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)))
     .y0(height)
     .y1((d) => y(d.price));
@@ -84,15 +88,16 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
     .attr('fill', 'url(#price-gradient)')
     .attr('d', area);
 
-// Add the line path
+  // Add the line path
   svg
     .append('path')
     .datum(filteredData)
     .attr('fill', 'none')
-    .attr('stroke', 'var(--primary)')
+    .attr('stroke', 'var(--robin-egg-blue)')
     .attr('stroke-width', 2)
     .attr('opacity', '0.8')
     .attr('d', d3.line()
+      .curve(d3.curveCardinal) // Round out the line and gradient area
       .x((d) => x(new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)))
       .y((d) => y(d.price))
     );
@@ -147,6 +152,42 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
       .html(`Time: ${d.hour}:00<br>Price: €${d.price.toFixed(2)}`)
       .style('left', `${xPos + 20}px`)
       .style('top', `${yPos + margin.top}px`);
+
+    // Add the X-axis gridlines (minor)
+  const xGridlinesMinor = d3.axisBottom(x)
+    .tickSize(-height)
+    .tickFormat("")
+    .ticks(16);
+
+  svg.append("g")
+    .attr("class", "grid")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xGridlinesMinor)
+    .selectAll("line")
+    .style("stroke-dasharray", "2,2")
+    .style("stroke-opacity", 0.4);
+
+  // Add the X-axis gridlines (major)
+  const xGridlinesMajor = d3.axisBottom(x)
+    .tickSize(-height)
+    .tickFormat("")
+    .ticks(2);
+
+  svg.append("g")
+    .attr("class", "grid")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xGridlinesMajor)
+    .selectAll("line")
+    .style("stroke-opacity", 0.7);
+
+  // Add the right-hand side solid line
+  svg.append("line")
+    .attr("x1", width)
+    .attr("y1", 0)
+    .attr("x2", width)
+    .attr("y2", height)
+    .attr("stroke", "var(--grey200)")
+    .attr("stroke-width", 1);
   };
 
 const hideTooltip = () => {
@@ -162,7 +203,7 @@ const hideTooltip = () => {
     .attr('cx', (d) => x(new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)))
     .attr('cy', (d) => y(d.price))
     .attr('r', 3)
-    .attr('fill', 'var(--primary)')
+    .attr('fill', 'var(--robin-egg-blue)')
     .on('mousemove', showTooltip)
     .on('mouseout', hideTooltip);
 
@@ -193,14 +234,14 @@ const hideTooltip = () => {
   gradient
     .append('stop')
     .attr('offset', '0%')
-    .attr('stop-color', 'var(--primary)')
-    .attr('stop-opacity', 0.8);
+    .attr('stop-color', 'var(--robin-egg-blue)')
+    .attr('stop-opacity', 0);
 
   gradient
     .append('stop')
     .attr('offset', '100%')
-    .attr('stop-color', 'var(--primary)')
-    .attr('stop-opacity', 0);
+    .attr('stop-color', 'var(--robin-egg-blue)')
+    .attr('stop-opacity', 0.8);
 }
 
 window.onload = () => {
@@ -210,7 +251,8 @@ window.onload = () => {
 };
 
 // You can get the region from session storage or use a default value
-const defaultRegion = sessionStorage.getItem('selected_region') || 'SYS';
+const defaultRegion = getSelectedRegion();
+
 
 renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
 
@@ -224,3 +266,5 @@ function resize() {
 window.addEventListener('resize', () => {
   resize();
 });
+
+
