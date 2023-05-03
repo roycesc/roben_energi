@@ -50,13 +50,48 @@ var settingsBtnMobile = document.getElementById("settingsBtnMobile");
 settingsBtnMobile.onclick = function() {
     settingsModal.style.display = "block";
 }
+// When the user clicks on the settings button, open the modal
+settingsBtn.onclick = function() {
+    settingsModal.style.display = "block";
+    setTimeout(function() {
+        settingsModal.classList.add("modal-show");
+    }, 100);
+}
+
+// When the user clicks on the close button, close the modal
+closeBtn.onclick = function() {
+    settingsModal.classList.remove("modal-show");
+    setTimeout(function() {
+        settingsModal.style.display = "none";
+    }, 500);
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == settingsModal) {
+        settingsModal.classList.remove("modal-show");
+        setTimeout(function() {
+            settingsModal.style.display = "none";
+        }, 500);
+    }
+}
+
+// When the user clicks on the settings button for mobile, open the modal
+settingsBtnMobile.onclick = function() {
+    settingsModal.style.display = "block";
+    setTimeout(function() {
+        settingsModal.classList.add("modal-show");
+    }, 100);
+}
 
 const cancelButton = document.getElementById('close');
 if (cancelButton) {
     cancelButton.addEventListener('click', (event) => {
         event.preventDefault();
         // Close the modal
-        settingsModal.style.display = "none";
-
+        settingsModal.classList.remove("modal-show");
+        setTimeout(function() {
+            settingsModal.style.display = "none";
+        }, 500);
     });
 }

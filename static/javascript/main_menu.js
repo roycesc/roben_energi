@@ -1,5 +1,11 @@
 const sideMenuToggleEvent = new Event('sideMenuToggle');
 
+// Hide the hamburger menu on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
+    hamburgerMenuItems.classList.add("hide");
+});
+
 // Gets variables values from the css
 function getCssVariableValue(variableName) {
   return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
@@ -30,6 +36,17 @@ function toggleMobileMenu() {
   const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
   hamburgerMenuItems.classList.toggle("hide");
 }
+
+// Closes the  Mobile Menu after clicking
+const menuItemLinks = document.querySelectorAll("#hamburgerMenuItems .menu-link");
+menuItemLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+        const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
+        hamburgerMenuItems.classList.add("hide");
+    });
+});
+
+
 
 // Change side menu on window resize
 function handleWindowResize() {

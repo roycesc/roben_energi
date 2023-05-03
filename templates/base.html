@@ -31,36 +31,36 @@
                 </ul>
             <div class="bottom-items">
             <ul>
-                <li><i class="material-icons">logout</i><span>Log out</span></li>
+                <li><a href="/"><i class="material-icons">logout</i><span>Log out</span></a></li>
                 <li><a id="settingsBtn"><i class="material-icons">settings</i><span>Settings</span></a></li>
             </ul>
             </div>
         </div>
 
-    <!-- Hamburger munu -->
+    <!-- Hamburger menu -->
     <div id="hamburgerMenu" class="hamburger-menu">
-            <img src="/static/images/roben-symbol.svg" alt="Logo" width="40" class="me-2">
+            <img onclick="toggleMobileMenu()" src="/static/images/roben-symbol.svg" alt="Logo" width="40" class="me-2">
             <button onclick="toggleMobileMenu()">
                 <i class="material-icons">menu</i>
             </button>
-            <div id="hamburgerMenuItems" class="hide">
-                <a href="/main">
+            <div id="hamburgerMenuItems" class="menu-link">
+                <a href="/main" class="menu-link">
                     <i class="material-icons">home</i>
                     <span>Home</span>
                 </a>
-                <a href="#">
-                    <i class="material-icons">account</i>
+                <a href="#"class="menu-link">
+                    <i class="material-icons">account_circle</i>
                     <span>My Account</span>
                 </a>
-                <a href="/prices">
+                <a href="/prices"class="menu-link">
                     <i class="material-icons">bar_chart</i>
                     <span>Price Data</span>
                 </a>
-                <a href="#">
+                <a href="/"class="menu-link">
                     <i class="material-icons">logout</i>
                     <span>Log out</span>
                 </a>
-                <a id="settingsBtnMobile">
+                <a href="#" id="settingsBtnMobile" class="menu-link">
                     <i class="material-icons">settings</i>
                     <span>Settings</span>
                 </a>
@@ -74,9 +74,10 @@
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-
-        <h1>Settings</h1>
+        <div class="modal-header">
+          <h2 class="modal-header-settings">Settings</h2>
+          <button class="close material-icons">close</button>
+        </div>
             <form id="settingsForm">
                 <h5 class="card-title">Select Region</h5>
                 <p class="card-text">
@@ -104,9 +105,7 @@
                         <option value="NL">NL</option>
                         <option value="SYS">SYS</option>
                     </select>
-                        <!-- Add other options for regions -->
                 </p>
-
                 <h5 class="card-title">Select Currency</h5>
                 <p class="card-text">
                         <select id="currencySelect" name="currency">
@@ -116,17 +115,15 @@
                             <option value="SEK">SEK</option>
                         </select>
                 </p>
+                <button class="button-secondary" id="close" type="button">Cancel</button>
                 <button class="button" id="updateButton" type="submit">Update & Close</button>
-                <button class="secondButton" id="close" type="button">Cancel</button>
 
             </form>
-
     </div>
-        <script src="static/javascript/settings.js" type="module"></script>
-    </div>
+</div>
         <!-- JavaScript -->
         <script src="/static/javascript/main_menu.js"></script>
         <script src="/static/javascript/settings_model.js"></script>
+        <script src="static/javascript/settings.js" type="module"></script>
     </body>
 </html>
-

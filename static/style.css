@@ -79,11 +79,11 @@ p {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     color: var(--grey200);
-  }  
+  }
 
 .chart-colours{
     background-color: var(--white);
-    
+
 }
 
 .rotate-icon {
@@ -167,6 +167,25 @@ p {
     color: var(--grey200);
   }
 
+.button {
+    margin: 16 16 0 16px;
+    padding:16px;
+    background-color: var(--robin-egg-blue);
+    border: 1px solid var(--grey200);
+    border-radius: 16px;
+    color: var(--white);
+    margin-left: auto;
+}
+
+.button-secondary{
+    margin-right: 16px;
+    padding:16px;
+    background-color: var(--white);
+    border: 1px solid var(--grey200);
+    border-radius: 16px;
+    color: var(--grey200);
+    margin-left: auto;
+}
 
 .bottom-items {
     position: absolute;
@@ -202,13 +221,13 @@ p {
     shape-rendering: crispEdges;
   }
 
-  .grid path {
+.grid path {
     stroke-width: 0;
-  }
+}
 
-  .grid .domain {
+.grid .domain {
     display: none;
-  }
+}
 
 .bottom-items {
     position: absolute;
@@ -296,20 +315,20 @@ p {
     border-radius: 16px;
     border: 1px solid var(--grey300);
   }
-  
+
   .card-title {
     display: flex;
     align-items: center;
     height: 48px;
   }
-  
-  
+
+
   .card-title img {
     margin-right: 16px;
     width: 40px;
     height: 40px;
   }
-  
+
   .card-title h5 {
     display: flex;
     align-items: center;
@@ -317,86 +336,67 @@ p {
     text-align: center;
     flex-grow: 1;
   }
-  
-   /*Overlay*/
-
-.overlay {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease-in-out;
-    transform: translateY(100%);
-  }
-  
-  .overlay-content {
-    background-color: var(--white);
-    border: 1px solid var(--grey200);
-    border-radius: 16px;
-    width: 600px;
-    height: 600px;
-    position: relative;
-  }
-  
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: var(--grey200);
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .hidden {
-    display: none;
-  }
 
 
 
 /* Modal */
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+
 }
 
-/* Modal Content */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    background-color: var(--white);
+    border: 1px solid var(--grey200);
+    border-radius: 16px;
+    margin: 15% auto;
+    padding: 24px;
+    width: 80%;
+    position: relative;
+    bottom: 0;
+    transform: translateY(200%);
+    transition: transform 0.5s ease-in-out;
+
 }
 
-/* The Close Button */
+.modal-show .modal-content {
+    transform: translateY(0%);
+}
+
+
+.modal-header-settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  margin: 0;
+}
+
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  border: none;
+  background: none;
+  font-size: 24px;
+  color: var(--grey200);
+  padding: 0;
+  cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover {
+  color: var(--grey100);
 }
+
 
 
 /* Hamburger Menu */
@@ -431,6 +431,7 @@ p {
     padding: 16px;
     width: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
 }
 
 #hamburgerMenuItems a {
@@ -442,6 +443,8 @@ p {
 
 #hamburgerMenuItems.show {
     display: block;
+    transform: translateY(0);
+    visibility: visible;
 }
 
 #hamburgerMenuItems a i.material-icons {
@@ -456,6 +459,8 @@ p {
 
 .hamburger-menu #hamburgerMenuItems.hide {
     display: none;
+    transform: translateY(-100%);
+  visibility: hidden;
   }
 
 @media screen and (max-width: 767px) {
@@ -477,5 +482,4 @@ p {
         margin-left: 0;
     }
 }
-
 
