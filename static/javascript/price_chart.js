@@ -112,7 +112,7 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
     .datum(filteredData)
     .attr('fill', 'none')
     .attr('stroke', 'var(--robin-egg-blue)')
-    .attr('stroke-width', 2)
+    .attr('stroke-width', 4)
     .attr('opacity', '0.8')
     .attr('d', d3.line()
       .curve(d3.curveCardinal) // Round out the line and gradient area
@@ -157,10 +157,16 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
 //  .attr('r', 8) // Change the dot size here
 //  .attr('fill', 'var(--pale-cyan)');
 
-  
 const currentTimeDot = svg.append('circle')
 .attr('r', 5) // Set the radius of the dot here (default is 5)
 .attr('fill', 'var(--dot-color, var(--pale-cyan))'); // Set the fill color, default is --grey100, but can be overridden by --dot-color
+
+const currentTimeLine = svg.append('line')
+  .attr('stroke', 'var(--pale-cyan')
+  .attr('stroke-width', '1');
+
+const currentTimeText = svg.append('text')
+  .attr('class', 'detail');
 
 function updateCurrentTimeLine() {
   const currentTime = new Date();
@@ -188,11 +194,30 @@ function updateCurrentTimeLine() {
   const priceDiff = closestDataPoints[1].price - closestDataPoints[0].price;
   const currentTimeDiff = currentTime.getHours() - closestDataPoints[0].hour;
   const interpolatedPrice = closestDataPoints[0].price + (currentTimeDiff * priceDiff) / timeDiff;
+  const yPosition = y(interpolatedPrice);
 
   currentTimeDot
     .attr("cx", xPosition)
     .attr("cy", y(interpolatedPrice));
+
+  // Update the currentTimeLine position
+  currentTimeLine
+    .attr('x1', xPosition)
+    .attr('y1', yPosition - 12)
+    .attr('x2', xPosition)
+    .attr('y2', yPosition - 12 - 16);
+
+  // Update the currentTimeText position and content
+  const currentDate = currentTime.toISOString().slice(0, 10);
+  const currentHour = currentTime.getHours();
+
+  currentTimeText
+    .attr('x', xPosition)
+    .attr('y', yPosition - 12 - 16)
+    .text(`${currentDate}\n ${currentHour}:00 - ${(currentHour + 1) % 24}:00\n ${interpolatedPrice.toFixed(2)}`);
+
 }
+
 
 
 
