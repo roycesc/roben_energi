@@ -1,17 +1,18 @@
 const sideMenuToggleEvent = new Event('sideMenuToggle');
 
-// Hide the hamburger menu on page load
-document.addEventListener("DOMContentLoaded", () => {
-    const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
-    hamburgerMenuItems.classList.add("hide");
-});
-
-// Gets variables values from the css
 function getCssVariableValue(variableName) {
   return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
 }
 
-// Increase the contents of the webpage in relation to the side menu size changing
+const toggleMobileMenu = () => {
+    const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
+    hamburgerMenuItems.classList.toggle("show");
+};
+
+const menuToggle = document.querySelector(".menu-toggle");
+menuToggle.addEventListener("click", toggleMobileMenu);
+
+
 function toggleCollapse() {
   const sideMenu = document.querySelector('.side-menu');
   const contentWrapper = document.getElementById('content-wrapper');
@@ -27,28 +28,48 @@ function toggleCollapse() {
     contentWrapper.style.marginLeft = sideMenuWidth;
   }
 
-  // Dispatch the custom event
   window.dispatchEvent(sideMenuToggleEvent);
 }
 
-// Toggle Mobile Menu
-function toggleMobileMenu() {
-  const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
-  hamburgerMenuItems.classList.toggle("hide");
+function showModal(modal) {
+  if ($('#hamburgerMenuItems').hasClass('show')) {
+    toggleMobileMenu(); // Close the mobile menu if it's open
+  }
+  modal.style.display = "block";
+  modal.querySelector(".modal-content").style.display = "block";
+  setTimeout(function () {
+    modal.classList.add("modal-show");
+  }, 100);
 }
 
-// Closes the  Mobile Menu after clicking
-const menuItemLinks = document.querySelectorAll("#hamburgerMenuItems .menu-link");
-menuItemLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-        const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
-        hamburgerMenuItems.classList.add("hide");
-    });
+
+function closeModal() {
+  const modal = document.getElementById("settingsModal");
+  hideModal(modal);
+}
+
+function hideModal(modal) {
+  modal.classList.remove("modal-show");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.querySelector(".modal-content").style.display = "none";
+  }, 500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtns = document.querySelectorAll(".close");
+  closeBtns.forEach((btn) => {
+    btn.addEventListener("click", closeModal);
+  });
+
+  const settingsBtn = document.getElementById("settingsBtn");
+  const settingsBtnMobile = document.getElementById("settingsBtnMobile");
+  const settingsModal = document.getElementById("settingsModal");
+
+  settingsBtn.addEventListener("click", () => showModal(settingsModal));
+  settingsBtnMobile.addEventListener("click", () => showModal(settingsModal));
 });
 
-
-
-// Change side menu on window resize
 function handleWindowResize() {
   const sideMenu = document.querySelector('.side-menu');
   const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -57,7 +78,7 @@ function handleWindowResize() {
 
   if (width <= 767) {
     sideMenu.style.display = 'none';
-    hamburgerMenu.style.display = 'flex';
+    hamburgerMenu.style.display = 'block';
     contentWrapper.style.marginLeft = '0';
   } else {
     sideMenu.style.display = 'block';
@@ -66,11 +87,28 @@ function handleWindowResize() {
   }
 }
 
+let lastScrollTop = 0;
+const hamburgerMenu = document.querySelector('.hamburger-menu');
 
-// Add event listener for window resize
+window.addEventListener('scroll', () => {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScrollTop > lastScrollTop) {
+        // Scrolling down
+        hamburgerMenu.style.top = '-76px';
+    } else {
+        // Scrolling up
+        hamburgerMenu.style.top = '0';
+    }
+
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+});
+
+
+
 window.addEventListener('resize', handleWindowResize);
 
-// Set initial side menu state based on window size
 document.addEventListener('DOMContentLoaded', () => {
   handleWindowResize();
 });
+

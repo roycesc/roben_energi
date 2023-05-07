@@ -25,9 +25,9 @@
             </a>
             <ul>
                 <li><a href="/main"><i class="material-icons">home</i><span>Home</span></a></li>
-                <li><i class="material-icons">account_circle</i><span>My Account</span></li>
+                <li><a href="/account"><i class="material-icons">account_circle</i><span>My Account</span></a></li>
                 <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
-                <li class="collapse-item" onclick="toggleCollapse()"><i class="material-icons collapse-icon">double_arrow</i><span>Collapse</span></li>
+                <li class="collapse-item" onclick="toggleCollapse()"><i class="material-icons rotate-icon">double_arrow</i><span>Collapse</span></li>
                 </ul>
             <div class="bottom-items">
             <ul>
@@ -37,38 +37,34 @@
             </div>
         </div>
 
-    <!-- Hamburger menu -->
-    <div id="hamburgerMenu" class="hamburger-menu">
-            <img onclick="toggleMobileMenu()" src="/static/images/roben-symbol.svg" alt="Logo" width="40" class="me-2">
-            <button onclick="toggleMobileMenu()">
-                <i class="material-icons">menu</i>
-            </button>
-            <div id="hamburgerMenuItems" class="menu-link">
-                <a href="/main" class="menu-link">
-                    <i class="material-icons">home</i>
-                    <span>Home</span>
-                </a>
-                <a href="#"class="menu-link">
-                    <i class="material-icons">account_circle</i>
-                    <span>My Account</span>
-                </a>
-                <a href="/prices"class="menu-link">
-                    <i class="material-icons">bar_chart</i>
-                    <span>Price Data</span>
-                </a>
-                <a href="/"class="menu-link">
-                    <i class="material-icons">logout</i>
-                    <span>Log out</span>
-                </a>
-                <a href="#" id="settingsBtnMobile" class="menu-link">
-                    <i class="material-icons">settings</i>
-                    <span>Settings</span>
-                </a>
-            </div>
-        </div>
+<!-- Hamburger menu -->
+<div id="hamburgerMenu" class="hamburger-menu">
+    <img src="/static/images/roben-symbol.svg" alt="Logo" width="40" class="me-2">
+    <nav>
+        <button class="menu-toggle">
+            <i class="material-icons">account_circle</i>
+        </button>
+        <ul id="hamburgerMenuItems" class="menu-link">
+            <li><a href="/account"><i class="material-icons">account_circle</i><span>My Account</span></a></li>
+            <li><a href="/"><i class="material-icons">logout</i><span>Log out</span></a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Bottom app bar -->
+<div id="bottomAppBar" class="bottom-app-bar navbar">
+    <nav>
+        <ul id="bottomAppBarItems" class="app-bar-link">
+            <li><a href="/main"><i class="material-icons">home</i><span>Home</span></a></li>
+            <li><a href="/prices"><i class="material-icons">bar_chart</i><span>Price Data</span></a></li>
+            <li><a href="#" id="settingsBtnMobile"><i class="material-icons">settings</i><span>Settings</span></a></li>
+        </ul>
+    </nav>
+</div>
 
 
-        {% block content %}{% endblock %}
+
+    {% block content %}{% endblock %}
 
         <!-- Settings Overlay -->
 
@@ -76,7 +72,7 @@
     <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-header-settings">Settings</h2>
-          <button class="close material-icons">close</button>
+          <button class="close material-icons" id="close">close</button>
         </div>
             <form id="settingsForm">
                 <h5 class="card-title">Select Region</h5>
@@ -115,15 +111,15 @@
                             <option value="SEK">SEK</option>
                         </select>
                 </p>
-                <button class="button-secondary" id="close" type="button">Cancel</button>
-                <button class="button" id="updateButton" type="submit">Update & Close</button>
-
+                <div class="button-container">
+                    <button class="button button-secondary" id="close" type="button">Cancel</button>
+                    <button class="button button-primary" id="updateButton" type="submit">Update & Close</button>
+                </div>
             </form>
     </div>
 </div>
-        <!-- JavaScript -->
+
         <script src="/static/javascript/main_menu.js"></script>
-        <script src="/static/javascript/settings_model.js"></script>
         <script src="static/javascript/settings.js" type="module"></script>
     </body>
 </html>

@@ -34,6 +34,10 @@ def landing_page():
 def main_page():
     return render_template('main_page.html')
 
+@app.route('/account')
+def account():
+    return render_template('account.html')
+
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
@@ -61,14 +65,6 @@ def prices():
     sorted_grouped_data = dict(sorted(grouped_data.items(), key=lambda x: x[0], reverse=True))
 
     return render_template('prices.html', grouped_data=sorted_grouped_data)
-
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
 
 @app.route('/chart_data', methods=['GET'])
 def chart_data():

@@ -40,13 +40,27 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
   d3.select('#chart').selectAll('*').remove();
 
 // Set dimensions and margins
-  const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+  let margin;
+if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devices
+  margin = { top: 40, right: 24, bottom: 40, left: 24 };
+} else {
+  margin = { top: 40, right: 40, bottom: 40, left: 40 };
+}
   const width = chartWidth - margin.left - margin.right;
   const height = chartHeight - margin.top - margin.bottom;
 
 // Define the scales
   const currentTime = new Date();
   const cutoffTime = new Date(currentTime - 48 * 60 * 60 * 1000 + 120 * 120 * 1000);
+
+  const svg = d3
+    .select('#chart')
+    .append('svg')
+    .attr('width', width + margin.left + margin.right) // Add margin.left and margin.right
+    .attr('height', height + margin.top + margin.bottom) // Add margin.top and margin.bottom
+    .append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`);
+
 
   const x = d3
     .scaleTime()
@@ -65,13 +79,13 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
     //console.log("y scale domain", y.domain());
 
 // Create the SVG container
-  const svg = d3
-    .select('#chart')
-    .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
+//  const svg = d3
+//    .select('#chart')
+//    .append('svg')
+//    .attr('width', width + margin.left + margin.right)
+//    .attr('height', height + margin.top + margin.bottom)
+//    .append('g')
+//    .attr('transform', `translate(${margin.left},${margin.top})`);
 
 // Add area path generator
   const area = d3
@@ -131,68 +145,65 @@ async function renderPriceChart(region, chartWidth, chartHeight) {
       .attr('font-family', 'var(--chart-font)')
       .attr('font-size', '24px')
       .attr('fill', 'var(--grey200)')
-      .text(`${region} energy prices`);
+      .text(`${region}'s energy prices`);
 
   // Add the tooltip
-    const tooltip = d3
-      .select('#chart')
-      .append('div')
-      .style('opacity', 0)
-      .attr('class', 'tooltip')
-      .style('background-color', 'var(--white)')
-      .style('border', '1px solid var(--grey100)')
-      .style('border-radius', '4px')
-      .style('padding', '4px')
-      .style('position', 'absolute');
+const tooltip = d3
+  .select('#chart')
+  .append('div')
+  .style('opacity', 0)
+  .attr('class', 'tooltip')
+  .style('background-color', 'var(--white)')
+  .style('border', '1px solid var(--grey100)')
+  .style('border-radius', '4px')
+  .style('padding', '4px')
+  .style('position', 'absolute');
 
-    const showTooltip = (event, d) => {
-    const [xPos, yPos] = d3.pointer(event);
-    tooltip
-      .style('opacity', 1)
-      .html(`Time: ${d.hour}:00<br>Price: €${d.price.toFixed(2)}`)
-      .style('left', `${xPos + 20}px`)
-      .style('top', `${yPos + margin.top}px`);
-
-    // Add the X-axis gridlines (minor)
-  const xGridlinesMinor = d3.axisBottom(x)
-    .tickSize(-height)
-    .tickFormat("")
-    .ticks(16);
-
-  svg.append("g")
-    .attr("class", "grid")
-    .attr("transform", `translate(0, ${height})`)
-    .call(xGridlinesMinor)
-    .selectAll("line")
-    .style("stroke-dasharray", "2,2")
-    .style("stroke-opacity", 0.4);
-
-  // Add the X-axis gridlines (major)
-  const xGridlinesMajor = d3.axisBottom(x)
-    .tickSize(-height)
-    .tickFormat("")
-    .ticks(2);
-
-  svg.append("g")
-    .attr("class", "grid")
-    .attr("transform", `translate(0, ${height})`)
-    .call(xGridlinesMajor)
-    .selectAll("line")
-    .style("stroke-opacity", 0.7);
-
-  // Add the right-hand side solid line
-  svg.append("line")
-    .attr("x1", width)
-    .attr("y1", 0)
-    .attr("x2", width)
-    .attr("y2", height)
-    .attr("stroke", "var(--grey200)")
-    .attr("stroke-width", 1);
-  };
+const showTooltip = (event, d) => {
+  const [xPos, yPos] = d3.pointer(event);
+  tooltip
+    .style('opacity', 1)
+    .html(`Time: ${d.hour}:00<br>Price: €${d.price.toFixed(2)}`)
+    .style('left', `${xPos + 20}px`)
+    .style('top', `${yPos + margin.top}px`);
+};
 
 const hideTooltip = () => {
-    tooltip.style('opacity', 0);
-  };
+  tooltip.style('opacity', 0);
+};
+
+const xGridlinesMinor = d3.axisBottom(x)
+  .tickSize(-height)
+  .tickFormat("")
+  .ticks(16);
+
+svg.append("g")
+  .attr("class", "grid")
+  .attr("transform", `translate(0, ${height})`)
+  .call(xGridlinesMinor)
+  .selectAll("line")
+  .style("stroke-dasharray", "2,2")
+  .style("stroke-opacity", 0.4);
+
+const xGridlinesMajor = d3.axisBottom(x)
+  .tickSize(-height)
+  .tickFormat("")
+  .ticks(2);
+
+svg.append("g")
+  .attr("class", "grid")
+  .attr("transform", `translate(0, ${height})`)
+  .call(xGridlinesMajor)
+  .selectAll("line")
+  .style("stroke-opacity", 0.7);
+
+svg.append("line")
+  .attr("x1", width)
+  .attr("y1", 0)
+  .attr("x2", width)
+  .attr("y2", height)
+  .attr("stroke", "var(--grey200)")
+  .attr("stroke-width", 1);
 
 // Add dots for the data points
   svg
