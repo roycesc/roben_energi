@@ -12,7 +12,6 @@ const toggleMobileMenu = () => {
 const menuToggle = document.querySelector(".menu-toggle");
 menuToggle.addEventListener("click", toggleMobileMenu);
 
-
 function toggleCollapse() {
   const sideMenu = document.querySelector('.side-menu');
   const contentWrapper = document.getElementById('content-wrapper');
@@ -24,8 +23,10 @@ function toggleCollapse() {
 
   if (sideMenu.classList.contains('collapsed')) {
     contentWrapper.style.marginLeft = sideMenuCollapsedWidth;
+    contentWrapper.style.width = `calc(100% - ${sideMenuCollapsedWidth})`;
   } else {
     contentWrapper.style.marginLeft = sideMenuWidth;
+    contentWrapper.style.width = `calc(100% - ${sideMenuWidth})`;
   }
 
   window.dispatchEvent(sideMenuToggleEvent);
@@ -103,8 +104,6 @@ window.addEventListener('scroll', () => {
 
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
 });
-
-
 
 window.addEventListener('resize', handleWindowResize);
 
