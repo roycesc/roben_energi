@@ -3,13 +3,16 @@
     --white: #FAFAFA;
     --grey300: #C8C8C8;
     --grey200: #646464;
+    --grey200-hover: #565656;
     --grey100: #313131;
     --primary: #FF9E75;
     --secondary: #E5EDEE;
     --pale-cyan: #75D6FF;
     --robin-egg-blue: #98D5FE;
+    --robin-egg-blue-hover: #75C8FC;
     --shandy: #75D6FF;
     --venetian-red: #CC1512;
+    --venetian-red-hover: #80110E; 
 
     /* Side menu */
     --side-menu-width: 192px;
@@ -162,12 +165,15 @@ p {
 }
 
 .button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
     margin: 16px;
     padding: 8px 16px;
     background-color: var(--robin-egg-blue);
-    border-radius: 16px;
+    border-radius: 8px;
     color: var(--white);
-    margin-right: auto;
+    width: calc(100% - 32px); 
 }
 
 .button-primary {
@@ -176,16 +182,27 @@ p {
     color: var(--white);
 }
 
+.button-primary:hover {
+    background-color: var(--robin-egg-blue-hover);
+}
+
 .button-secondary {
     background-color: var(--white);
     border: 1px solid var(--grey200);
     color: var(--grey200);
 }
 
+.button-secondary {
+    background-color: var(--grey200-hover);
+}
+
 .button-danger {
     background-color: var(--venetian-red);
     border: 1px solid var(--grey300);
     color: var(--white);
+}
+.button-danger {
+    background-color: var(--venetian-red-hover);
 }
 
 
@@ -354,6 +371,7 @@ p {
 }
 
 
+
 /* Modal */
 
 .modal {
@@ -408,6 +426,100 @@ p {
 .close:hover {
   color: var(--grey100);
 }
+
+.duration {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.input-field {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--grey200);
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 0 8px;
+    appearance: none;
+    background: url('https://fonts.gstatic.com/s/i/materialiconsoutlined/keyboard_arrow_down/v16/24px.svg?download=true') no-repeat 96% center;
+    background-size: 24px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--grey200);
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--white);
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--robin-egg-blue);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+
+.toggle-switch-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.toggle-label {
+    font-size: 16px;
+}
+
+.calculate-button {
+    background-color: var(--robin-egg-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.calculate-button:hover {
+    background-color: var(--robin-egg-blue-hover);
+}
+
+
 
 /* Bottom App Bar */
 

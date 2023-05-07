@@ -12,40 +12,140 @@
 
             <!-- Top of Cards -->
             <div class="custom-row">
-                <!-- Card 1 -->
-                <div class="card-container col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <img src="static/images/washing-machine.png" alt="icon"> Washing Machine
-                            </h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <!-- Card 1 -->
+            <div class="card-container col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <img src="static/images/washing-machine.png" alt="icon"> Washing Machine
+                        </h5>
+                        <label>Est wash time</label>
+                        <div class="duration">
+                            <select class="input-field" id="hours">
+                                <option value="0">0 h</option>
+                                <option value="1">1 h</option>
+                                <option value="2">2 h</option>
+                                <option value="3">3 h</option>
+                                <option value="4">4 h</option>
+                                <option value="5">5 h</option>
+                                <option value="6">6 h</option>
+                            </select>
+                            <select class="input-field" id="minutes">
+                                <option value="0">0 m</option>
+                                <option value="15">15 m</option>
+                                <option value="30">30 m</option>
+                                <option value="45">45 m</option>
+                            </select>
+                        </div>
+                        <div class="toggle-switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="delayToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="toggle-label">Delay end of cycle</span>
+                        </div>
+                        <button class="calculate-button">Calculate</button>
+                        <div class="start-time-utput-field">
+                            <label for="bestStartTime">Best start time:</label>
+                            <span id="bestStartTime"></span>
+                        </div>
+                        <div class="delay-time-output-field">
+                            <label for="delayTime">Set time delay:</label>
+                            <span id="delayTime"></span>
                         </div>
                     </div>
                 </div>
+            </div>
+
                 <!-- Card 2 -->
                 <div class="card-container col">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <img src="static/images/dishwasher.png" alt="icon"> Dishwasher
-                            </h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <img src="static/images/dishwasher.png" alt="icon"> Dishwasher</h5>
+                                <label>Est wash time</label>
+                                <div class="duration">
+                                    <select class="input-field" id="hoursDishwasher">
+                                        <option value="0">0 h</option>
+                                        <option value="1">1 h</option>
+                                        <option value="2">2 h</option>
+                                        <option value="3">3 h</option>
+                                        <option value="4">4 h</option>
+                                        <option value="5">5 h</option>
+                                        <option value="6">6 h</option>
+                                    </select>
+                                    <select class="input-field" id="minutesDishwasher">
+                                        <option value="0">0 m</option>
+                                        <option value="15">15 m</option>
+                                        <option value="30">30 m</option>
+                                        <option value="45">45 m</option>
+                                    </select>
+                                </div>
+                                <!-- <div class="toggle-switch-container">
+                                    <label class="switch">
+                                        <input type="checkbox" id="delayToggleDishwasher">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span class="toggle-label">Delay end of cycle</span>
+                                </div> -->
+                                <button class="calculate-button" id="calculateButtonDishwasher">Calculate</button>
+                                <div class="output-field">
+                                    <label for="bestUseTimeDishwasher">Best start time:</label>
+                                    <span id="bestUseTimeDishwasher"></span>
+                                </div>
+                                <div class="output-field">
+                                    <label for="bestDelayDishwasher">Set time delay:</label>
+                                    <span id="bestDelayDishwasher"></span>
+                                </div>
                         </div>
-                    </div>
-                </div>
+                    </div>  
+                </div>         
                 <!-- Card 3 -->
                 <div class="card-container col">
                   <div class="card h-100">
                     <div class="card-body">
                       <h5 class="card-title">
-                        <img src="static/images/charger.png" alt="icon">
-                        EV Car Charger
-                      </h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <img src="static/images/charger.png" alt="icon">Car Charger</h5>
+                        <label>Est charge time</label>
+                        <div class="duration">
+                            <select class="input-field" id="hoursCarCharger">
+                                <option value="0">0 h</option>
+                                <option value="1">1 h</option>
+                                <option value="2">2 h</option>
+                                <option value="3">3 h</option>
+                                <option value="4">4 h</option>
+                                <option value="5">5 h</option>
+                                <option value="6">6 h</option>
+                                <option value="7">7 h</option>
+                                <option value="8">8 h</option>
+                                <option value="9">9 h</option>
+                                <option value="10">10 h</option>
+                                <option value="11">11 h</option>
+                                <option value="12">12 h</option>
+                            </select>
+                            <select class="input-field" id="minutesCarCharger">
+                                <option value="0">0 m</option>
+                                <option value="15">15 m</option>
+                                <option value="30">30 m</option>
+                                <option value="45">45 m</option>
+                            </select>
+                        </div>
+                        <!-- <div class="toggle-switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="delayToggleCarCharger">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="toggle-label">Delay end of cycle</span>
+                        </div> -->
+                        <button class="calculate-button" id="calculateButtonCarCharger">Calculate</button>
+                        <div class="output-field">
+                            <label for="bestUseTimeCarCharger">Best start time:</label>
+                            <span id="bestUseTimeCarCharger"></span>
+                        </div>
                     </div>
-                  </div>
                 </div>
+            </div>
 
                 <!-- End of cards -->
             </div>

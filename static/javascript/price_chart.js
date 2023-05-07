@@ -200,26 +200,7 @@ function updateCurrentTimeLine() {
     .attr("cx", xPosition)
     .attr("cy", y(interpolatedPrice));
 
-  // Update the currentTimeLine position
-  currentTimeLine
-    .attr('x1', xPosition)
-    .attr('y1', yPosition - 12)
-    .attr('x2', xPosition)
-    .attr('y2', yPosition - 12 - 16);
-
-  // Update the currentTimeText position and content
-  const currentDate = currentTime.toISOString().slice(0, 10);
-  const currentHour = currentTime.getHours();
-
-  currentTimeText
-    .attr('x', xPosition)
-    .attr('y', yPosition - 12 - 16)
-    .text(`${currentDate}\n ${currentHour}:00 - ${(currentHour + 1) % 24}:00\n ${interpolatedPrice.toFixed(2)}`);
-
 }
-
-
-
 
   // Add the tooltip
   const tooltip = d3
@@ -237,7 +218,7 @@ const showTooltip = (event, d) => {
   const [xPos, yPos] = d3.pointer(event);
   tooltip
     .style('opacity', 1)
-    .html(`Time: ${d.hour}:00<br>Price: €${d.price.toFixed(2)}`)
+    .html(`${d.hour}:00 - ${d.hour + 1}:00 <br>Price: ${d.price.toFixed(2)}`)
     .style('left', `${xPos + 8}px`)
     .style('top', `${yPos + margin.top}px`);
 };
