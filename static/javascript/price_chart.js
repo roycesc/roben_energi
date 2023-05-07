@@ -1,10 +1,8 @@
 import { getSelectedRegion } from './settings.js';
 
-
 const chartDiv = d3.select('#chart');
 let chartDivWidth = parseInt(chartDiv.style('width'));
 let chartDivHeight = parseInt(chartDiv.style('height'));
-
 
 async function fetchChartData(region) {
   console.log("Fetching chart data for region:", region);
@@ -19,6 +17,27 @@ async function fetchChartData(region) {
   }
 }
 
+function findPriceAtCurrentTime(data, currentTime) {
+  const closestDataPoint = data.reduce((prev, curr) => {
+    const prevTimeDiff = Math.abs(new Date(`${prev.date}T${String(prev.hour).padStart(2, '0')}:00:00`) - currentTime);
+    const currTimeDiff = Math.abs(new Date(`${curr.date}T${String(curr.hour).padStart(2, '0')}:00:00`) - currentTime);
+    return (prevTimeDiff < currTimeDiff) ? prev : curr;
+  });
+
+  const prevDataPoint = data[data.indexOf(closestDataPoint) - 1];
+  if (!prevDataPoint) {
+    return closestDataPoint.price;
+  }
+
+  const timeDiff = closestDataPoint.hour - prevDataPoint.hour;
+  const priceDiff = closestDataPoint.price - prevDataPoint.price;
+  const currentTimeDiff = currentTime.getHours() - prevDataPoint.hour;
+  const interpolatedPrice = prevDataPoint.price + (currentTimeDiff * priceDiff) / timeDiff;
+
+  return interpolatedPrice;
+}
+
+
 function filterDataByHours(data, hours) {
   const currentTime = new Date();
   const cutoffTime = new Date(currentTime - hours * 60 * 60 * 1000);
@@ -30,26 +49,25 @@ function filterDataByHours(data, hours) {
   });
 }
 
-
 async function renderPriceChart(region, chartWidth, chartHeight) {
   const data = await fetchChartData(region);
   const filteredData = filterDataByHours(data, 48);
   console.log('Filtered data:', filteredData);
 
-// Clear the previous chart
+  // Clear the previous chart
   d3.select('#chart').selectAll('*').remove();
 
-// Set dimensions and margins
+  // Set dimensions and margins
   let margin;
-if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devices
-  margin = { top: 40, right: 24, bottom: 40, left: 24 };
-} else {
-  margin = { top: 40, right: 40, bottom: 40, left: 40 };
-}
-  const width = chartWidth - margin.left - margin.right;
-  const height = chartHeight - margin.top - margin.bottom;
+    if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devices
+      margin = { top: 40, right: 24, bottom: 40, left: 24 };
+    } else {
+      margin = { top: 40, right: 40, bottom: 40, left: 40 };
+    }
+      const width = chartWidth - margin.left - margin.right;
+      const height = chartHeight - margin.top - margin.bottom;
 
-// Define the scales
+  // Define the scales
   const currentTime = new Date();
   const cutoffTime = new Date(currentTime - 48 * 60 * 60 * 1000 + 120 * 120 * 1000);
 
@@ -61,7 +79,6 @@ if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devic
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-
   const x = d3
     .scaleTime()
     .domain([
@@ -69,25 +86,12 @@ if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devic
       d3.max(filteredData, (d) => new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)),
     ])
     .range([0, width]);
-
+  
   const y = d3
     .scaleLinear()
     .domain([0, d3.max(filteredData, (d) => d.price) * 1.1])
     .range([height, 0]);
 
-    //console.log("filteredData", filteredData);
-    //console.log("y scale domain", y.domain());
-
-// Create the SVG container
-//  const svg = d3
-//    .select('#chart')
-//    .append('svg')
-//    .attr('width', width + margin.left + margin.right)
-//    .attr('height', height + margin.top + margin.bottom)
-//    .append('g')
-//    .attr('transform', `translate(${margin.left},${margin.top})`);
-
-// Add area path generator
   const area = d3
     .area()
     .curve(d3.curveCardinal)
@@ -137,34 +141,79 @@ if (window.innerWidth <= 768) { // 768px is a common breakpoint for mobile devic
       .attr('fill', 'var(--grey200)');
 
 // Add the title
-    svg
-      .append('text')
-      .attr('x', width / 2)
-      .attr('y', -15)
-      .attr('text-anchor', 'middle')
-      .attr('font-family', 'var(--chart-font)')
-      .attr('font-size', '24px')
-      .attr('fill', 'var(--grey200)')
-      .text(`${region}'s energy prices`);
+  svg
+    .append('text')
+    .attr('x', width / 2)
+    .attr('y', -15)
+    .attr('text-anchor', 'middle')
+    .attr('font-family', 'var(--chart-font)')
+    .attr('font-size', '24px')
+    .attr('fill', 'var(--grey200)')
+    .text(`${region}'s energy prices`);
+
+  // Add the time dot
+//  const currentTimeDot = svg.append('circle')
+//  .attr('cy', 0)
+//  .attr('r', 8) // Change the dot size here
+//  .attr('fill', 'var(--pale-cyan)');
+
+  
+const currentTimeDot = svg.append('circle')
+.attr('r', 5) // Set the radius of the dot here (default is 5)
+.attr('fill', 'var(--dot-color, var(--pale-cyan))'); // Set the fill color, default is --grey100, but can be overridden by --dot-color
+
+function updateCurrentTimeLine() {
+  const currentTime = new Date();
+  currentTime.setMinutes(0); // Set the minutes to 0 to get the start of the current hour
+  currentTime.setSeconds(0); // Set the seconds to 0 to avoid any small offset
+  currentTime.setMilliseconds(0); // Set the milliseconds to 0 to avoid any small offset
+  const xPosition = x(currentTime);
+
+  // Find the two closest data points
+  const closestDataPoints = filteredData
+    .slice()
+    .sort(
+      (a, b) =>
+        Math.abs(
+          currentTime - new Date(`${a.date}T${String(a.hour).padStart(2, "0")}:00:00`)
+        ) -
+        Math.abs(
+          currentTime - new Date(`${b.date}T${String(b.hour).padStart(2, "0")}:00:00`)
+        )
+    )
+    .slice(0, 2);
+
+  // Calculate the interpolated price
+  const timeDiff = closestDataPoints[1].hour - closestDataPoints[0].hour;
+  const priceDiff = closestDataPoints[1].price - closestDataPoints[0].price;
+  const currentTimeDiff = currentTime.getHours() - closestDataPoints[0].hour;
+  const interpolatedPrice = closestDataPoints[0].price + (currentTimeDiff * priceDiff) / timeDiff;
+
+  currentTimeDot
+    .attr("cx", xPosition)
+    .attr("cy", y(interpolatedPrice));
+}
+
+
 
   // Add the tooltip
-const tooltip = d3
-  .select('#chart')
-  .append('div')
-  .style('opacity', 0)
-  .attr('class', 'tooltip')
-  .style('background-color', 'var(--white)')
-  .style('border', '1px solid var(--grey100)')
-  .style('border-radius', '4px')
-  .style('padding', '4px')
-  .style('position', 'absolute');
+  const tooltip = d3
+    .select('#chart')
+    .append('div')
+    .style('opacity', 0)
+    .attr('class', 'tooltip')
+    .style('background-color', 'var(--white)')
+    .style('border', '1px solid var(--grey100)')
+    .style('border-radius', '4px')
+    .style('padding', '4px')
+    .style('position', 'absolute');
 
 const showTooltip = (event, d) => {
   const [xPos, yPos] = d3.pointer(event);
   tooltip
     .style('opacity', 1)
     .html(`Time: ${d.hour}:00<br>Price: €${d.price.toFixed(2)}`)
-    .style('left', `${xPos + 20}px`)
+    .style('left', `${xPos + 8}px`)
     .style('top', `${yPos + margin.top}px`);
 };
 
@@ -205,18 +254,22 @@ svg.append("line")
   .attr("stroke", "var(--grey200)")
   .attr("stroke-width", 1);
 
-// Add dots for the data points
+  const rectangleWidth = 24;
+
   svg
-    .selectAll('dot')
+    .selectAll('invisible-rectangle')
     .data(filteredData)
     .enter()
-    .append('circle')
-    .attr('cx', (d) => x(new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)))
-    .attr('cy', (d) => y(d.price))
-    .attr('r', 3)
-    .attr('fill', 'var(--robin-egg-blue)')
+    .append('rect')
+    .attr('x', (d) => x(new Date(`${d.date}T${String(d.hour).padStart(2, '0')}:00:00`)) - rectangleWidth / 2)
+    .attr('y', (d) => y(d.price) - rectangleWidth / 2)
+    .attr('width', rectangleWidth)
+    .attr('height', rectangleWidth)
+    .attr('fill', 'none')
+    .attr('pointer-events', 'all') // Make sure the invisible rectangles still trigger mouse events
     .on('mousemove', showTooltip)
     .on('mouseout', hideTooltip);
+  
 
   svg.append("g")
       .attr("class", "grid")
@@ -248,34 +301,67 @@ svg.append("line")
     .attr('stop-color', 'var(--robin-egg-blue)')
     .attr('stop-opacity', 0);
 
-  gradient
+    gradient
     .append('stop')
     .attr('offset', '100%')
     .attr('stop-color', 'var(--robin-egg-blue)')
     .attr('stop-opacity', 0.8);
+
+  svg.select(".grid .domain").remove();
+
+  return {
+    updateCurrentTimeLine,
+  };
 }
+
 
 window.onload = () => {
   chartDivWidth = parseInt(chartDiv.style('width'));
   chartDivHeight = parseInt(chartDiv.style('height'));
-  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
+  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight).then(returnedChart => {
+    chart = returnedChart;
+    chart.updateCurrentTimeLine();
+  });
 };
+
+setInterval(() => {
+  if (typeof chart !== 'undefined') {
+    chart.updateCurrentTimeLine();
+  } else {
+    console.warn('chart is not defined yet. Skipping the updateCurrentTimeLine() call.');
+  }
+}, 1000 * 60 * 5);
+
+function resize() {
+  chartDivWidth = parseInt(chartDiv.style('width'));
+  chartDivHeight = parseInt(chartDiv.style('height'));
+  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
+  updateCurrentTimeLine();
+}
+
+
+
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+// Resizes the graph after the menu collapses 
+document.getElementById('toggle-collapse-btn').addEventListener('click', () => {
+  resize();
+});
 
 // You can get the region from session storage or use a default value
 const defaultRegion = getSelectedRegion();
 
+//renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
+window.addEventListener('resize', debounce(resize, 200));
 
-renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
 
-function resize() {
-  chartDivWidth = parseInt(chartDiv.style('width'));
-
-  // Re-render the chart with the new dimensions
-  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
-}
-
-window.addEventListener('resize', () => {
+window.addEventListener('sideMenuToggleEvent', () => {
   resize();
 });
-
 
