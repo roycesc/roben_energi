@@ -1,28 +1,95 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!-- Main content -->
-    <div class="content-wrapper" id="content-wrapper">
-        <div class="col-12">
+<!-- Main content -->
+<div class="content-wrapper" id="content-wrapper">
+    <div class="col-12">
+        <!-- Card Slider -->    
+        <div class="card-container">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="slider-tab">
+                        <input type="radio" name="tab" class="tab-radio" id="tab1" checked="checked">
+                        <label class="tab-label" for="tab1">Washer</label>
+                        <input type="radio" name="tab" class="tab-radio" id="tab2">
+                        <label class="tab-label" for="tab2">Dishwasher</label>
+                        <input type="radio" name="tab" class="tab-radio" id="tab3">
+                        <label class="tab-label" for="tab3">Charger</label>
+                        <div class="indicator"></div>
+                    </div>
+                    <!-- Card Slider 1 -->
+                    <div class="card-content">
+                        <div class="card-slider active" id="card-slider-1">
+                            <h5 class="card-title"><img src="static/images/washing-machine.png" alt="icon"> Washing Machine</h5>
+                            <label>Estimated wash time</label>
+                            <div class="duration">
+                                <select class="input-field" id="hours-wash">
+                                    <option value="0">0 h</option>
+                                    <option value="1">1 h</option>
+                                    <option value="2">2 h</option>
+                                    <option value="3">3 h</option>
+                                    <option value="4">4 h</option>
+                                    <option value="5">5 h</option>
+                                    <option value="6">6 h</option>
+                                </select>
+                                <select class="input-field" id="minute-wash">
+                                    <option value="0">0 m</option>
+                                    <option value="15">15 m</option>
+                                    <option value="30">30 m</option>
+                                    <option value="45">45 m</option>
+                                </select>
+                            </div>
+                                <div class="toggle-switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" id="wash-best" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="toggle-label">Optimal start time</span>
+                                </div>
+                            <div id="startTime-wash-container" class="start-time-container">
+                                <label id="startTime-wash">Select start time within</label>
+                                <div class="duration">
+                                    <select class="input-field" id="washer-start-hours">
+                                    <option value="0">0 h</option>
+                                    <option value="1">1 h</option>
+                                    <option value="2">2 h</option>
+                                    <option value="3">3 h</option>
+                                    <option value="4">4 h</option>
+                                    <option value="5">5 h</option>
+                                    <option value="6">6 h</option>
+                                    </select>
+                                    <select class="input-field" id="washer-start-minutes">
+                                    <option value="0">0 m</option>
+                                    <option value="15">15 m</option>
+                                    <option value="30">30 m</option>
+                                    <option value="45">45 m</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="button-container">
+                                <button class="button button-secondary" id="resetWasher">Reset<i class="refresh"></i></button>
+                                <button class="button button-primary" id="calc-wash">Calculate<i class="fas fa-check"></i></button>
+                            </div>
 
-            <!--Chart -->
-            <div class="chart" >
-            <div id="chart"></div>
-            </div>
+                            <div class="toggle-switch-container">
+                                <label class="switch">
+                                <input type="checkbox" id="delayToggle">
+                                <span class="slider"></span>
+                                </label>
+                                <span class="toggle-label">Delay is calculate at the end of the wash</span>
+                            </div>
 
-            <!-- Top of Cards -->
-            <div class="custom-row">
-
-            <!-- Card 1 -->
-            <div class="card-container col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <img src="static/images/washing-machine.png" alt="icon"> Washing Machine
-                        </h5>
-                        <label>Est wash time</label>
+                            <label for="bestStartTime">Best start time:</label>
+                            <div class="delay-time-output-field">
+                                <span class="output" id="output-wash">12:00</span>
+                            </div>
+                        </div>
+                    <!-- Card Slider 2 -->
+                    <div class="card-slider" id="card-slider-2">
+                        <h5 class="card-title"><img src="static/images/dishwasher.png" alt="icon"> Dishwasher</h5>
+                        <label>Estimated wash time</label>
                         <div class="duration">
-                            <select class="input-field" id="hours">
+                            <select class="input-field" id="hours-dish">
                                 <option value="0">0 h</option>
                                 <option value="1">1 h</option>
                                 <option value="2">2 h</option>
@@ -31,7 +98,7 @@
                                 <option value="5">5 h</option>
                                 <option value="6">6 h</option>
                             </select>
-                            <select class="input-field" id="minutes">
+                            <select class="input-field" id="minutes-dish">
                                 <option value="0">0 m</option>
                                 <option value="15">15 m</option>
                                 <option value="30">30 m</option>
@@ -40,76 +107,15 @@
                         </div>
                         <div class="toggle-switch-container">
                             <label class="switch">
-                                <input type="checkbox" id="delayToggle">
+                                <input type="checkbox" id="dish-best" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span class="toggle-label">Delay end of cycle</span>
+                            <span class="toggle-label">Optimal start time</span>
                         </div>
-                        <button class="calculate-button">Calculate</button>
-                        <div class="start-time-utput-field">
-                            <label for="bestStartTime">Best start time:</label>
-                            <span id="bestStartTime"></span>
-                        </div>
-                        <div class="delay-time-output-field">
-                            <label for="delayTime">Set time delay:</label>
-                            <span id="delayTime"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                <!-- Card 2 -->
-                <div class="card-container col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <img src="static/images/dishwasher.png" alt="icon"> Dishwasher</h5>
-                                <label>Est wash time</label>
-                                <div class="duration">
-                                    <select class="input-field" id="hoursDishwasher">
-                                        <option value="0">0 h</option>
-                                        <option value="1">1 h</option>
-                                        <option value="2">2 h</option>
-                                        <option value="3">3 h</option>
-                                        <option value="4">4 h</option>
-                                        <option value="5">5 h</option>
-                                        <option value="6">6 h</option>
-                                    </select>
-                                    <select class="input-field" id="minutesDishwasher">
-                                        <option value="0">0 m</option>
-                                        <option value="15">15 m</option>
-                                        <option value="30">30 m</option>
-                                        <option value="45">45 m</option>
-                                    </select>
-                                </div>
-                                <!-- <div class="toggle-switch-container">
-                                    <label class="switch">
-                                        <input type="checkbox" id="delayToggleDishwasher">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <span class="toggle-label">Delay end of cycle</span>
-                                </div> -->
-                                <button class="calculate-button" id="calculateButtonDishwasher">Calculate</button>
-                                <div class="output-field">
-                                    <label for="bestUseTimeDishwasher">Best start time:</label>
-                                    <span id="bestUseTimeDishwasher"></span>
-                                </div>
-                                <div class="output-field">
-                                    <label for="bestDelayDishwasher">Set time delay:</label>
-                                    <span id="bestDelayDishwasher"></span>
-                                </div>
-                        </div>
-                    </div>  
-                </div>         
-                <!-- Card 3 -->
-                <div class="card-container col">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <img src="static/images/charger.png" alt="icon">Car Charger</h5>
-                        <label>Est charge time</label>
-                        <div class="duration">
-                            <select class="input-field" id="hoursCarCharger">
+                        <div id="startTime-dish-container" class="start-time-container">
+                        <label id="startTime-dish">Select start time within</label>
+                            <div class="duration">
+                                <select class="input-field" id="dish-start-hours">
                                 <option value="0">0 h</option>
                                 <option value="1">1 h</option>
                                 <option value="2">2 h</option>
@@ -117,40 +123,107 @@
                                 <option value="4">4 h</option>
                                 <option value="5">5 h</option>
                                 <option value="6">6 h</option>
-                                <option value="7">7 h</option>
-                                <option value="8">8 h</option>
-                                <option value="9">9 h</option>
-                                <option value="10">10 h</option>
-                                <option value="11">11 h</option>
-                                <option value="12">12 h</option>
-                            </select>
-                            <select class="input-field" id="minutesCarCharger">
+                                </select>
+                                <select class="input-field" id="dish-start-minutes">
                                 <option value="0">0 m</option>
                                 <option value="15">15 m</option>
                                 <option value="30">30 m</option>
                                 <option value="45">45 m</option>
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                        <!-- <div class="toggle-switch-container">
-                            <label class="switch">
-                                <input type="checkbox" id="delayToggleCarCharger">
-                                <span class="slider"></span>
-                            </label>
-                            <span class="toggle-label">Delay end of cycle</span>
-                        </div> -->
-                        <button class="calculate-button" id="calculateButtonCarCharger">Calculate</button>
+                
+                        <div class="button-container">
+                                <button class="button button-secondary" id="resetDishwasher">Reset</button>
+                                <button class="button button-primary" id="calc-dish">Calculate</button>
+                        </div>
+                        <label for="bestUseTimeDishwasher">Start time:</label>
                         <div class="output-field">
-                            <label for="bestUseTimeCarCharger">Best start time:</label>
-                            <span id="bestUseTimeCarCharger"></span>
+                            <span class="output" id="output-dish">14:00</span>
+                        </div>
+             
+                    </div>
+                    <!-- Card Slider 3 -->
+                    <div class="card-slider" id="card-slider-3">
+                    <h5 class="card-title"><img src="static/images/charger.png" alt="icon">Car Charger</h5>
+                    <label>Estimated charge time</label>
+                    <div class="duration">
+                        <select class="input-field" id="hours-car">
+                        <option value="0">0 h</option>
+                        <option value="1">1 h</option>
+                        <option value="2">2 h</option>
+                        <option value="3">3 h</option>
+                        <option value="4">4 h</option>
+                        <option value="5">5 h</option>
+                        <option value="6">6 h</option>
+                        <option value="7">7 h</option>
+                        <option value="8">8 h</option>
+                        <option value="9">9 h</option>
+                        <option value="10">10 h</option>
+                        <option value="11">11 h</option>
+                        <option value="12">12 h</option>
+                        </select>
+                        <select class="input-field" id="minutes-car">
+                        <option value="0">0 m</option>
+                        <option value="15">15 m</option>
+                        <option value="30">30 m</option>
+                        <option value="45">45 m</option>
+                        </select>
+                    </div>
+                    <div class="toggle-switch-container">
+                        <label class="switch">
+                        <input type="checkbox" id="car-best" checked>
+                        <span class="slider"></span>
+                        </label>
+                        <span class="toggle-label">Optimal start time</span>
+                    </div>
+                    <div id="startTime-car-container" class="start-time-container">
+                        <label id="startTime-car">Select start time within</label>
+                        <div class="duration">
+                        <select class="input-field" id="car-start-hours">
+                            <option value="0">0 h</option>
+                            <option value="1">1 h</option>
+                            <option value="2">2 h</option>
+                            <option value="3">3 h</option>
+                            <option value="4">4 h</option>
+                            <option value="5">5 h</option>
+                            <option value="6">6 h</option>
+                        </select>
+                        <select class="input-field" id="car-start-minutes">
+                            <option value="0">0 m</option>
+                            <option value="15">15 m</option>
+                            <option value="30">30 m</option>
+                            <option value="45">45 m</option>
+                        </select>
+                        </div>
+                    </div>
+                    
+                    <div class="button-container">
+                        <button class="button button-secondary" id="resetCarCharger">Reset</button>
+                        <button class="button button-primary" id="calc-car">Calculate</button>
+                    </div>
+                        <label for="bestUseTimeCarCharger">Start time:</label>
+                        <div class="output-field">
+                        <span class="output" id="output-car">19:00</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-                <!-- End of cards -->
-            </div>
         </div>
+                            <!-- End of card slider -->
+                            <div class="card second-card h-100">
+                                <div class="card-body">
+                                </div>
+                            </div>
     </div>
+
+        <!--Chart -->
+        <div class="chart">
+            <div id="chart"></div>
+        </div>
+</div>
+                
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="static/javascript/price_chart.js" type="module"></script>
+    <script src="static/javascript/cards.js"></script>
     {% endblock %}
