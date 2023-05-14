@@ -324,11 +324,13 @@ svg.append("line")
 window.onload = () => {
   chartDivWidth = parseInt(chartDiv.style('width'));
   chartDivHeight = parseInt(chartDiv.style('height'));
-  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight).then(returnedChart => {
+  const selectedRegion = getSelectedRegion();
+  renderPriceChart(selectedRegion, chartDivWidth, chartDivHeight).then(returnedChart => {
     chart = returnedChart;
     chart.updateCurrentTimeLine();
   });
 };
+
 
 setInterval(() => {
   if (typeof chart !== 'undefined') {
@@ -341,11 +343,10 @@ setInterval(() => {
 function resize() {
   chartDivWidth = parseInt(chartDiv.style('width'));
   chartDivHeight = parseInt(chartDiv.style('height'));
-  renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
+  const selectedRegion = getSelectedRegion();
+  renderPriceChart(selectedRegion, chartDivWidth, chartDivHeight);
   updateCurrentTimeLine();
 }
-
-
 
 function debounce(func, wait) {
   let timeout;
@@ -365,6 +366,20 @@ const defaultRegion = getSelectedRegion();
 
 //renderPriceChart(defaultRegion, chartDivWidth, chartDivHeight);
 window.addEventListener('resize', debounce(resize, 200));
+
+export function updateChartWithNewRegion() {
+  const selectedRegion = getSelectedRegion();
+  renderPriceChart(selectedRegion, chartDivWidth, chartDivHeight).then(returnedChart => {
+    chart = returnedChart;
+    chart.updateCurrentTimeLine();
+  });
+}
+
+import { updateChartWithNewRegion } from './price_chart.js';
+
+document.getElementById('settingsModal').addEventListener('click', () => {
+  updateChartWithNewRegion();
+});
 
 
 window.addEventListener('sideMenuToggleEvent', () => {

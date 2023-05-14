@@ -5,8 +5,8 @@ function getCssVariableValue(variableName) {
 }
 
 const toggleMobileMenu = () => {
-    const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
-    hamburgerMenuItems.classList.toggle("show");
+  const hamburgerMenuItems = document.getElementById("hamburgerMenuItems");
+  hamburgerMenuItems.classList.toggle("show");
 };
 
 const menuToggle = document.querySelector(".menu-toggle");
@@ -49,6 +49,8 @@ function closeModal() {
   hideModal(modal);
 }
 
+
+
 function hideModal(modal) {
   modal.classList.remove("modal-show");
   setTimeout(function () {
@@ -59,6 +61,12 @@ function hideModal(modal) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const closeBtns = document.querySelectorAll(".close");
+  const cancelBtns = document.querySelectorAll("[data-modal-action='close']");
+
+  cancelBtns.forEach((btn) => {
+    btn.addEventListener("click", closeModal);
+  });
+
   closeBtns.forEach((btn) => {
     btn.addEventListener("click", closeModal);
   });
@@ -69,6 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   settingsBtn.addEventListener("click", () => showModal(settingsModal));
   settingsBtnMobile.addEventListener("click", () => showModal(settingsModal));
+});
+
+document.addEventListener("click", (event) => {
+  if (event.target.classList.contains("modal")) {
+    closeModal();
+  }
 });
 
 function handleWindowResize() {
@@ -92,17 +106,17 @@ let lastScrollTop = 0;
 const hamburgerMenu = document.querySelector('.hamburger-menu');
 
 window.addEventListener('scroll', () => {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (currentScrollTop > lastScrollTop) {
-        // Scrolling down
-        hamburgerMenu.style.top = '-76px';
-    } else {
-        // Scrolling up
-        hamburgerMenu.style.top = '0';
-    }
+  if (currentScrollTop > lastScrollTop) {
+      // Scrolling down
+      hamburgerMenu.style.top = '-76px';
+  } else {
+      // Scrolling up
+      hamburgerMenu.style.top = '0';
+  }
 
-    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+  lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
 });
 
 window.addEventListener('resize', handleWindowResize);
